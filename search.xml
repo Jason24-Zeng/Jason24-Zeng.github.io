@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Embedding Introdction (III)</title>
+      <link href="/2022/01/20/Embedding-Introduction-III/"/>
+      <url>/2022/01/20/Embedding-Introduction-III/</url>
+      
+        <content type="html"><![CDATA[<h4 id="Embedding-在互联网场景的使用-Graph-Embedding"><a href="#Embedding-在互联网场景的使用-Graph-Embedding" class="headerlink" title="Embedding 在互联网场景的使用 - Graph Embedding"></a>Embedding 在互联网场景的使用 - Graph Embedding</h4><p>之前讲的 word2vec 和 item2vec 实际上都是在一个序列的基础上获得对象的隐式向量表达的。但是在互联网场景下，数据对象之前可能更多得呈现的是图结构，比如使用用户行为生成的物品全局关系图，或者物品属性知识图谱等。这种背景下，传统的序列 embedding 方法无法很好处理，因此，对图结构中节点进行表达的 graph embedding 便成了新的研究方向。随着大数据时代的到来，推荐系统愈发重要，这项技术也因此愈发受到重视。</p><h5 id="Graph-Embedding-早期方法-Deep-Walk"><a href="#Graph-Embedding-早期方法-Deep-Walk" class="headerlink" title="Graph Embedding 早期方法 - Deep Walk"></a>Graph Embedding 早期方法 - Deep Walk</h5><p>基于随机游走生成图结构对应的节点序列，是早期 Graph Embedding 的一种重要方法。其允许重复访问已访问节点，使用深度优先（DFS）进行序列生成。</p><p>其思路是，给定一个节点，通过随机采样的方法，获得该节点相邻节点中的一个，以此作为序列的下一个节点。重复上述步骤，知道序列长度达到预期长度。再使用 skip-gram word2vec 的方法表达向量。使用了 Hierachical Softmax 中构造 Huffman 树的技巧优化了 softmax 的时间复杂度</p><p>其伪代码表示为：</p><p><img src="https://jason24-zeng.github.io/img/Embedding-Introduction-III/fake_coding.png" alt="graph embedding deep walk algorithm"> </p><p>使用随机游走的方法创建训练数据，这种方法的特点：</p><ul><li><p>可以实现机器、进程或线程维度的并行</p></li><li><p>适合动态更新，更新时只对新增节点增加</p></li></ul><p>该算法的超参数有：</p><ul><li><p>skip-gram 的窗口大小 $w$</p></li><li><p>生成向量的维度，隐藏层的神经元个数 $d$</p></li><li><p>每个节点的游走次数 $\gamma$</p></li><li><p>游走长度 $t$</p></li></ul><p>可认为 DeepWalk 是 Graph Embedding 的 baseline 方法。</p><p>参考：<a href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk: Online Learning of Social Representations</a></p><h5 id="Large-scale-Information-Network-Embedding-LINE"><a href="#Large-scale-Information-Network-Embedding-LINE" class="headerlink" title="Large-scale Information Network Embedding (LINE)"></a>Large-scale Information Network Embedding (LINE)</h5><p>LINE 将非常大的信息网络映射到了低维向量空间（embedding）中，对可视化，节点分类等问题都有不错的效果。其相对 DeepWalk 这种纯粹随机游走的序列生成方式有以下两个特点：</p><ol><li><p>可以应用到有向图、无向图以及边有权重的网络</p></li><li><p>使用一阶、二阶的临近关系引入目标函数，从而使最终学出的 node embedding 的分布更加均匀平滑，避免 node embedding 聚集的情况发生</p></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> Machine Learning </category>
+          
+          <category> Embedding </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Embedding </tag>
+            
+            <tag> Graph Embedding </tag>
+            
+            <tag> Deep Walk </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Embedding Introduction (II)</title>
       <link href="/2022/01/20/Embedding-Introduction-II/"/>
       <url>/2022/01/20/Embedding-Introduction-II/</url>
