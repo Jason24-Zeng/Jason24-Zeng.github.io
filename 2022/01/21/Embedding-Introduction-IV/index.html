@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Embedding-Introduction (IV) | Jason &amp; Anita's Blog</title><meta name="keywords" content="Embedding,Graph Embedding"><meta name="author" content="Jason Zeng, Anita Xiong"><meta name="copyright" content="Jason Zeng, Anita Xiong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="LINE接 上一章节 我们已经定义好处理 LINE 的一阶与二阶 proximity 的目标函数，这一节主要是讨论函数的优化。 模型优化回顾first-order proximity 目标函数 $$O_1 &#x3D; - \sum_{(i, j)\in E} w_{ij}\log p_1(v_i, v_j) \tag{1}$$ second-order proximity 目标函数 $$O_2 &#x3D; - \">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Embedding-Introduction (IV)">
+<meta property="og:url" content="https://jason24-zeng.github.io/2022/01/21/Embedding-Introduction-IV/index.html">
+<meta property="og:site_name" content="Jason &amp; Anita&#39;s Blog">
+<meta property="og:description" content="LINE接 上一章节 我们已经定义好处理 LINE 的一阶与二阶 proximity 的目标函数，这一节主要是讨论函数的优化。 模型优化回顾first-order proximity 目标函数 $$O_1 &#x3D; - \sum_{(i, j)\in E} w_{ij}\log p_1(v_i, v_j) \tag{1}$$ second-order proximity 目标函数 $$O_2 &#x3D; - \">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jason24-zeng.github.io/img/Embedding-Introduction-III/deepwalk_top.png">
+<meta property="article:published_time" content="2022-01-21T10:08:34.000Z">
+<meta property="article:modified_time" content="2022-01-21T11:47:50.789Z">
+<meta property="article:author" content="Jason Zeng, Anita Xiong">
+<meta property="article:tag" content="Embedding">
+<meta property="article:tag" content="Graph Embedding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jason24-zeng.github.io/img/Embedding-Introduction-III/deepwalk_top.png"><link rel="shortcut icon" href="/img/kobe.jpeg"><link rel="canonical" href="https://jason24-zeng.github.io/2022/01/21/Embedding-Introduction-IV/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Embedding-Introduction (IV)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-21 19:47:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/kobe.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">11</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/Embedding-Introduction-III/deepwalk_top.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jason &amp; Anita's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Embedding-Introduction (IV)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-01-21T10:08:34.000Z" title="Created 2022-01-21 18:08:34">2022-01-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-01-21T11:47:50.789Z" title="Updated 2022-01-21 19:47:50">2022-01-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Machine-Learning/">Machine Learning</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Machine-Learning/Embedding/">Embedding</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">910</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>3min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Embedding-Introduction (IV)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h4 id="LINE"><a href="#LINE" class="headerlink" title="LINE"></a>LINE</h4><p>接 <a href="https://jason24-zeng.github.io/2022/01/20/Embedding-Introduction-III/">上一章节</a></p>
+<p>我们已经定义好处理 LINE 的一阶与二阶 proximity 的目标函数，这一节主要是讨论函数的优化。</p>
+<h4 id="模型优化"><a href="#模型优化" class="headerlink" title="模型优化"></a>模型优化</h4><h6 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h6><p>first-order proximity 目标函数</p>
+<p>$$<br>O_1 = - \sum_{(i, j)\in E} w_{ij}\log p_1(v_i, v_j) \tag{1}<br>$$</p>
+<p>second-order proximity 目标函数</p>
+<p>$$<br>O_2 = - \sum_{(i, j)\in E} w_{ij} \log p_2(v_j|v_i) \tag{2}<br>$$</p>
+<p>计算 second-order proximity 消耗较高，因为需要计算每个顶点的条件概率，然后把这些概率加和。为了解决这个消耗问题，文中采用了负采样的方法，通过每条边的一些噪音分布去采样多条负边。对边 $(i, j)$ 的目标函数变为：</p>
+<p>$$<br>\log\sigma(\vec{u_j}^{1T} \cdot \vec{u_i}) + \sum^K_{i = 1} E_{v_n \sim P_n(v)}\left[\log\sigma(\vec{u}_n^{1T} \cdot \vec{u}_i)\right] \tag{3}<br>$$</p>
+<p>其中，$\sigma(x) = 1 / (1 + \exp(-x))$ 是 sigmod 函数。前一项基于观察的边建模，后一项对从噪音分布采样得到的负边建模。$K$ 表示负边的总数。我们设定 $P_n(v) \propto d_v^{3/4}$，而 $d_v$ 为顶点 $v$ 的出度。</p>
+<p>对于目标函数 $1$， 存在一个平凡解：$\forall i k, u_{ik} = \infty$。为了避免这个问题，我们依然使用方程 $3$ 中的负采样方法，只是把 $\vec{u_j}^{1T}$ 换成 $\vec{u_j}^{T}$ 即可。</p>
+<p>为了最优化方程 $3$，文中采用了异步随机梯度算法（asynchronous stochastic gradient algorithm, ASGD）。每一步，ASGD 算法采样了一 mini-batch 的边，然后更新模型参数。如果一条边 $(i, j)$ 被采样，则梯度 (顶点 $i$ 的embedding 向量 $\vec{u_i}$) 会被使用一下方程计算</p>
+<p>$$<br>\frac{\partial O_2}{\partial \vec{u_i}} = w_{ij}\cdot \frac{\partial \log p_2(v_j|v_i)}{\partial \vec{u_i}}<br>$$</p>
+<p>这样的问题在于梯度会被乘以边权，当边权方差较大时，可能出现问题。</p>
+<p>上面的问题主要出在对于不同的边权，固定的学习率不合适。所以一个简单的解决方法是将边权为 $w$ 的边 unfold 成 $w$ 条 0 - 1 边。这可以解决问题，但是会显著提升内存占用。文中的解决方法实际上是，将 $w$ 作为作为概率分布的权重，随机采样样本边，将取到的样本边作为 0 - 1 边去训练。这个想法与 XGBoost 中的直方图思想如出一辙。</p>
+<p>而随机采样要达到空间时间上的最优还要考虑一些算法上的优化。我们假设 $W = (w_1, w_2, …, w_{|E|})$ 表示一系列边的权重，我们可以通过计算一个 $w_{sum} = \sum_{i = 1}^{|E|}$ 作为随机数的上界，判断这个随机数处于哪个区间，便能 sample 出边，这样的算法时间复杂度是 $O(|E|)$ ，在边很多的情况下时间花销较大。为了解决这个问题，可以考虑使用 <a target="_blank" rel="noopener" href="https://blog.csdn.net/haolexiao/article/details/65157026">alias table 方法</a>，这个方法可以再 $O(1)$ 的时间复杂度下从固定的离散分布里根据权重筛选样本。</p>
+<p>由此，我们可知，采样一条边需要 $O(1)$ 的时间复杂度，那么负采样优化后整体的时间花销为 $O(d(K + 1))$ ，$K$ 为负采样数量。因此，每一步迭代会花费 $O(dK)$ 次。而实际情况下，每次消耗的时间正比于边的数量 $|E|$。因此，LINE 的整体时间复杂度是 $O(dK|E|)$，与顶点数量无关。</p>
+<h6 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h6><p>从上面的理论推到可以看出，边的采样策略在不影响整体效果的前提下提升了随机梯度下降的效率。</p>
+<h4 id="Node2vec-对-DeepWalk-方法的改进"><a href="#Node2vec-对-DeepWalk-方法的改进" class="headerlink" title="Node2vec 对 DeepWalk 方法的改进"></a>Node2vec 对 DeepWalk 方法的改进</h4></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Jason Zeng, Anita Xiong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jason24-zeng.github.io/2022/01/21/Embedding-Introduction-IV/">https://jason24-zeng.github.io/2022/01/21/Embedding-Introduction-IV/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Embedding/">Embedding</a><a class="post-meta__tags" href="/tags/Graph-Embedding/">Graph Embedding</a></div><div class="post_share"><div class="social-share" data-image="/img/Embedding-Introduction-III/deepwalk_top.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat/微信"/></a><div class="post-qr-code-desc">wechat/微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay/支付宝"/></a><div class="post-qr-code-desc">alipay/支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/01/20/Embedding-Introduction-III/"><img class="next-cover" src="/img/Embedding-Introduction-III/deepwalk_top.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Embedding Introduction (III)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/01/20/Embedding-Introduction-III/" title="Embedding Introduction (III)"><img class="cover" src="/img/Embedding-Introduction-III/deepwalk_top.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-20</div><div class="title">Embedding Introduction (III)</div></div></a></div><div><a href="/2022/01/20/Embedding-Introduction-II/" title="Embedding Introduction (II)"><img class="cover" src="/img/Embedding-Introduction-II/item2vec_top.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-20</div><div class="title">Embedding Introduction (II)</div></div></a></div><div><a href="/2022/01/19/Embedding-Introduction/" title="Embedding Introduction (I)"><img class="cover" src="/img/Embedding-Introduction/embedding_top.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-19</div><div class="title">Embedding Introduction (I)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/kobe.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jason Zeng, Anita Xiong</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">11</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">7</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jason24-Zeng/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:z5zeng@eng.ucsd.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/img/wechat_link.jpeg" target="_blank" title="Wechat"><i class="fab fa-weixin"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#LINE"><span class="toc-number">1.</span> <span class="toc-text">LINE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">模型优化</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9B%9E%E9%A1%BE"><span class="toc-number">2.0.1.</span> <span class="toc-text">回顾</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">2.0.2.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Node2vec-%E5%AF%B9-DeepWalk-%E6%96%B9%E6%B3%95%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-number">3.</span> <span class="toc-text">Node2vec 对 DeepWalk 方法的改进</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/21/Embedding-Introduction-IV/" title="Embedding-Introduction (IV)"><img src="/img/Embedding-Introduction-III/deepwalk_top.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Embedding-Introduction (IV)"/></a><div class="content"><a class="title" href="/2022/01/21/Embedding-Introduction-IV/" title="Embedding-Introduction (IV)">Embedding-Introduction (IV)</a><time datetime="2022-01-21T10:08:34.000Z" title="Created 2022-01-21 18:08:34">2022-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/20/Embedding-Introduction-III/" title="Embedding Introduction (III)"><img src="/img/Embedding-Introduction-III/deepwalk_top.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Embedding Introduction (III)"/></a><div class="content"><a class="title" href="/2022/01/20/Embedding-Introduction-III/" title="Embedding Introduction (III)">Embedding Introduction (III)</a><time datetime="2022-01-20T14:23:59.000Z" title="Created 2022-01-20 22:23:59">2022-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/20/Embedding-Introduction-II/" title="Embedding Introduction (II)"><img src="/img/Embedding-Introduction-II/item2vec_top.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Embedding Introduction (II)"/></a><div class="content"><a class="title" href="/2022/01/20/Embedding-Introduction-II/" title="Embedding Introduction (II)">Embedding Introduction (II)</a><time datetime="2022-01-19T17:21:10.000Z" title="Created 2022-01-20 01:21:10">2022-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/19/Embedding-Introduction/" title="Embedding Introduction (I)"><img src="/img/Embedding-Introduction/embedding_top.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Embedding Introduction (I)"/></a><div class="content"><a class="title" href="/2022/01/19/Embedding-Introduction/" title="Embedding Introduction (I)">Embedding Introduction (I)</a><time datetime="2022-01-19T13:26:50.000Z" title="Created 2022-01-19 21:26:50">2022-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/17/heap-sort/" title="堆排序代码实现"><img src="/img/HeapSort/heap_top.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="堆排序代码实现"/></a><div class="content"><a class="title" href="/2022/01/17/heap-sort/" title="堆排序代码实现">堆排序代码实现</a><time datetime="2022-01-17T12:23:17.000Z" title="Created 2022-01-17 20:23:17">2022-01-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/Embedding-Introduction-III/deepwalk_top.png')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2022 By Jason Zeng, Anita Xiong</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">follow your heart</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="rightside.chat_btn"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
