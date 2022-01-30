@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ElasticSearch (II)</title>
+      <link href="/2022/01/30/ElasticSearch-II/"/>
+      <url>/2022/01/30/ElasticSearch-II/</url>
+      
+        <content type="html"><![CDATA[<h2 id="运行-Elasticsearch"><a href="#运行-Elasticsearch" class="headerlink" title="运行 Elasticsearch"></a>运行 Elasticsearch</h2><p>假设已经下载 Docker、Elasticsearch 和 Kibana，接下来讲解在 docker 里面启动 Elasticsearch 和 Kibana，并对 Elasticsearch 集群启用多个节点。</p><h3 id="Docker-中启动单节点-Elasticsearch"><a href="#Docker-中启动单节点-Elasticsearch" class="headerlink" title="Docker 中启动单节点 Elasticsearch"></a>Docker 中启动单节点 Elasticsearch</h3><p>使用如下指令以实例化 ElasticSearch 服务</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name es -d -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; elasticsearch:7.16.2</span><br></pre></td></tr></table></figure><p>以上将 9200 端口与 9300 端口映射到 docker 相应端口，如果不做端口映射，浏览器无法访问 elasticsearch 服务。其中 9200 为供 http 访问端口，9300 为供 tcp 访问端口。</p><p>如果想要实现数据持久化，则需要通过 -v 参数将 docker 宿主机 (host) 上的目录 mount 到 ElasticSearch 容器里。相关指令如下（<code>/usr/local/es</code> 为宿主机的目录地址）：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name es -d /usr/local/es:/usr/share/elasticsearch/data -p 9200:9200 -p 9300:9300 -e &quot;discovery.type=single-node&quot; elasticsearch:7.16.2</span><br></pre></td></tr></table></figure><p>需要注意的是，宿主机的目录需要赋权，否则会报错：failed to bind service AccessDeniedException</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 /usr/local/es</span><br></pre></td></tr></table></figure><p>执行 <code>docker ps</code> 查看容器是否成功运行。在打开浏览器访问 <code>localhost:9200</code>，如果展现如下，则说明服务启动成功。</p><p><img src="/Users/zijianzeng/Documents/hexo/new_blog/source/img/ElasticSearch-II/local_host.png" alt="local_host.png"></p><p>如果需要可视化管理界面，可以通过 Chrome 浏览器安装插件 ElasticSearch Head. </p><p><img src="/Users/zijianzeng/Documents/hexo/new_blog/source/img/ElasticSearch-II/elasticsearch_head.png" alt="elasticsearch_head.png"></p><p>则最终的展示为</p><p><img src="/Users/zijianzeng/Documents/hexo/new_blog/source/img/ElasticSearch-II/elasticsearch_head2.png" alt="elasticsearch_head2.png"></p><h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a href="https://juejin.cn/post/6844904202204872711">Docker部署ElasticSearch及使用</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> ElasticSearch </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> ElasticSearch </tag>
+            
+            <tag> Apache </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Docker Intro (I)</title>
       <link href="/2022/01/29/Docker-Intro-I/"/>
       <url>/2022/01/29/Docker-Intro-I/</url>
