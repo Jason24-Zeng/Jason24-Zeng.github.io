@@ -60,7 +60,7 @@
       <link href="/2022/01/28/Golang-Intro-I/"/>
       <url>/2022/01/28/Golang-Intro-I/</url>
       
-        <content type="html"><![CDATA[<h3 id="golang-Go-简介-WIP">golang (Go) 简介 -WIP</h3><h5 id="问题">问题</h5><ol><li><p>如果 proto 之间存在依赖关系，需要怎么编译。</p></li><li><p>import 动态库</p></li><li><p>json.Unmarshall 做了什么</p></li><li><p>Go 如何跳转</p></li></ol>]]></content>
+        <content type="html"><![CDATA[<h3 id="golang-Go-简介-WIP"><a href="#golang-Go-简介-WIP" class="headerlink" title="golang (Go) 简介 -WIP"></a>golang (Go) 简介 -WIP</h3><h5 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h5><ol><li><p>如果 proto 之间存在依赖关系，需要怎么编译。</p></li><li><p>import 动态库</p></li><li><p>json.Unmarshall 做了什么</p></li><li><p>Go 如何跳转</p></li></ol>]]></content>
       
       
       <categories>
