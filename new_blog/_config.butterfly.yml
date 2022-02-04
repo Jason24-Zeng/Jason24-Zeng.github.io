@@ -8,9 +8,10 @@
 
 menu:
   Home: / || fas fa-home
-  Archives: /archives/ || fas fa-archive
-  Tags: /tags/ || fas fa-tags
-  Categories: /categories/ || fas fa-folder-open
+  Find || fa-fw fa fa-book:
+    Archives: /archives/ || fas fa-archive
+    Tags: /tags/ || fas fa-tags
+    Categories: /categories/ || fas fa-folder-open
   # List||fas fa-list:
   #   Music: /music/ || fas fa-music
   #   Movie: /movies/ || fas fa-video
@@ -57,7 +58,10 @@ algolia_search:
 
 # Local search
 local_search:
-  enable: false 
+  enable: true
+  labels:
+    input_placeholder: Search for Posts
+    hits_empty: "We didn't find any results for the search: ${query}" 
 
 # Math (數學)
 # --------------------------------------

@@ -11,12 +11,6 @@ cover: /img/ElasticSearch/elastic_search_top.png
 top_img: /img/ElasticSearch-VI/kibana_cover.png
 ---
 
-### Reference
-
-[Kibana Discover数据查询](https://www.tizi365.com/archives/796.html)
-[Lucene查询语法汇总](https://www.cnblogs.com/chenqionghe/p/12501218.html)
-[Kibana详细入门教程](https://www.cnblogs.com/chenqionghe/p/12503181.html)
-
 ### Kibana 介绍
 
 Kibana 是一种辅助 ElasticSearch 进行可视化数据分析的工具，它的存在大大方便了我们对线上搜索日志数据或者机器性能等的 Inspection。可以简单得通过 docker-compose 启动一个 kibana 容器，并与 elastic 服务相连。
@@ -143,3 +137,44 @@ i18n.locale: zh-CN
 #### 其他区域
 
 其实 Discover 右上角还有一些 「选项」，「检查」等操作，可以用来查看更底层的发送请求与相应，同样支持保存操作，已被后续修改。
+
+#### 后台运行搜索 session
+
+有时候我们可能想要搜索大量的数据，这可能会花很长的时间。这时候我们可以在后台运行我们的请求，从而可以继续进行其他工作。操作步骤：
+
+1. Load dashboard。搜索会话自动开始，在 dashboard 的 title 后的时钟 icon 会展示当前搜索会话的状态，是正在运行，还是结束。
+
+2. 为了告诉 Kibana 要持续后台搜索，点击那个时钟 icon ，然后点击「保存会话 / Save session」
+
+3. 而为了看我们保存的搜索，可以打开主菜单，然后点击 「Stack Management」> 「Search Session」。
+
+4. 选择要看的那个搜索会话，点击 
+   
+   1. 「Inspect」查看造成这个搜索的请求和过滤条件
+   
+   2. 「Edit」 编辑一个会话的名字
+   
+   3. 「Extend」延长一个完整 session 的 expiration
+   
+   4. 「Delete」删除一个会话
+
+### Dashboard
+
+Dashboard 就是我们常说的可视化看板，是为了将字段或者一些统计数据直观得展现出来的可视化界面。它可以是直接通过对源数据进行聚合进行展现，也可以通过上面的 Discover 保存的结果中进行 Add。主要展现形式是图标。
+
+##### 将搜索结果加入看板
+
+- 打开一个 Dashboard
+
+- 点击 「Add from Library」或「从库中添加」
+
+- 从选项中选择保存过的搜索，然后点击 **X** 退出
+
+### Reference
+
+[Kibana Discover数据查询](https://www.tizi365.com/archives/796.html)
+[Lucene查询语法汇总](https://www.cnblogs.com/chenqionghe/p/12501218.html)
+[Kibana详细入门教程](https://www.cnblogs.com/chenqionghe/p/12503181.html)
+[ELK总结——第四篇Kibana的简介](https://zhuanlan.zhihu.com/p/102185616)
+[Search for relevance](https://www.elastic.co/guide/en/kibana/current/discover-search-for-relevance.html)
+[Dashboard and visualizations](https://www.elastic.co/guide/en/kibana/current/dashboard.html#dashboard)
