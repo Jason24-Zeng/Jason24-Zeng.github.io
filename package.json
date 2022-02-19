@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "hexo": "^6.0.0"
+    "hexo": "^6.0.0",
+    "hexo-deployer-git": "^3.0.0",
+    "hexo-renderer-jade": "^0.5.0",
+    "hexo-renderer-less": "^4.0.0"
   }
 }
