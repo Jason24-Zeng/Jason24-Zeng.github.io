@@ -1,5 +1,5 @@
 ---
-title: ElasticSearch (VI)
+title: ElasticSearch (VI) -- Kibana 使用
 date: 2022-02-03 19:38:36
 tags:
 - ElasticSearch
