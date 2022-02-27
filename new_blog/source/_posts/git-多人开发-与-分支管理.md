@@ -41,8 +41,8 @@ git clone git@github.com:Jason24-Zeng/Jason24-Zeng.github.io.git $name
 进入 `$name` 的目录，可以通过输入 `git remote -v` 显示详细的远程库信息
 
 ```textile
-origin	git@github.com:Jason24-Zeng/Jason24-Zeng.github.io.git (fetch)
-origin	git@github.com:Jason24-Zeng/Jason24-Zeng.github.io.git (push)
+origin    git@github.com:Jason24-Zeng/Jason24-Zeng.github.io.git (fetch)
+origin    git@github.com:Jason24-Zeng/Jason24-Zeng.github.io.git (push)
 ```
 
 origin 是远程仓库的默认名称，fetch 和 push 显示当前具有抓取与推送到 `origin` 的权限。
@@ -57,7 +57,7 @@ git push origin master
 
 表示将当前本地提交的内容推送到 origin 这个远程仓库的 master 远程分支上。如果推送的结果与前面的结果有冲突，可以先 `git pull` 将当前的远程分支拉到本地，然后将冲突解决后，再 push 到远程分支上。如果远程分支只有一个人使用，且确认希望就将当前的内容完全 push 到远程分支上，则可以使用 `git push -f origin master`，它会清空 远程 `master` 分支的内容，然后把本地分支的内容全部推送给  master。
 
-### 不要再本地 master 分支上开发
+### 不要在本地 master 分支上开发
 
 再次提到，不要再本地 master 分支上开发，每天让本地 master 分支追踪远程 master 分支，并拉取最新代码，同时保证 master 分支是干净的。这样，我们每次切出的分支才是干净的，这会减少大量可能存在的 bug 引入与 冲突解决。
 
@@ -98,3 +98,25 @@ git branch -u origin master
 这样就可以再新分支上开发并推送修改到远程 master 分支上了。
 
 而多人协作时最常出现的情况就是在 push 远程分支上出现冲突，和前面提到的一样，这时因为远程分支已经进行了修改，但是我们切出的分支与远程分支已经分叉，需要做的就是将远程分支的修改拉到切出的分支上，使用 `git pull` 解决往冲突后，切出的分支实的修改实际就是基于当前更新后的远程 master 分支进行修改了。
+
+### `git pull` 操作
+
+`git pull` 命令先运行 `git fetch` 去下载相关仓库的内容。然后执行一个 `git merge` 操作，把远程的内容 ref 与 当前的 head merge, 并指向一个新的当地 merge commit。整个操作如同从图1
+
+![bubble-diagram_01.svg](https://jason24-zeng.github.io/img/git-多人开发-与-分支管理/bubble-diagram_01.svg)
+
+到图2
+
+![bubble-diagram_02.svg](https://jason24-zeng.github.io/img/git-多人开发-与-分支管理/bubble-diagram_02.svg)
+
+的整个流程。
+
+相比 `git pull` 这个操作需要我们新更新一个 commit 以及 merge 切出去的分支的流程，我个人更喜欢用 `git pull --rebase` 这种换基的操作。这样做的好处是保证一个线性历史的追踪以及不必要的 merge commit。事实上，因为 --rebase 是一个非常常见的操作，所以我们可以直接设置一个 configuration, 保证使用 `git pull` 时，其实际操作是 `git pull --rebase`，这个操作是
+
+```shell
+git config --global branch.autosetuprebase always
+```
+
+与 merge 整个分支不同，rebase 把已提交的本地 commits 复制并写到了远程分支 commits 后面，这样就保证了历史 commit 的线性。其图表示为：
+
+![bubble-diagram_03.png](https://jason24-zeng.github.io/img/git-多人开发-与-分支管理/bubble-diagram_03.png)
