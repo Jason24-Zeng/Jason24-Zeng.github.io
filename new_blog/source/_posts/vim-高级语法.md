@@ -8,6 +8,8 @@ categories:
 - tools
 - vim
 - cmd line
+cover: /img/command-line/1200px-Vimlogo.svg.png
+top_img: /img/ElasticSearch/1200px-Vimlogo.svg.png
 ---
 
 ## vim 高级操作
@@ -194,6 +196,26 @@ ls /etc/*.conf | xargs -i cp {} /home/likegeeks/Desktop/out
 ```
 
 可以看到 vim 会有限读取 user vimrc file: `"$HOME/.vimrc"`，当这个文件不存在时，vim 会去寻找 2nd user vimrc file：`"~/.vim/vimrc"`。了解这个对以后查询 `vim` 不生效的原因很重要。
+
+### 自动补全
+
+#### 单词补全
+
+这种补全方式属于单词的前缀匹配，在 Insert 模式下，我们输入一些单词，然后按 `ctrl + n`， vim 会自动出现下拉菜单，且默认选中第一个单词，此时可以使用上下光标进行单词的选择。而 `ctrl + p` 的功能也是这样的，只是默认选中列表的最后一个单词。
+
+#### 行补全
+
+这种补全方式不再只补全其中一个单词，而是自动补全整句，使用的操作命令顺序为：`ctrl + x` 、 `ctrl + l`
+
+#### 字典补全
+
+假定有一个候选字典表 `my_diction.txt`，里面每一行都会有一个单词，我们可以载入这个词典表，基于这个词典表进行 Vim 自动补全，设置步骤为：
+
+1. 在 `$HOME/.vimrc` 配置文件中加入: `set dictionary-=~/dict.txt dictionary+=~/dict.txt`
+
+2. 打开 `vim`，在插入模式下输入 `ctrl + x` 后输入 `ctrl + k`，就可以匹配字典中的单词
+
+3. 如果想要使用单词补全的方法显示列表，即使用 `ctrl + n`，可以考虑配置 `.vimrc` 文件，加入: `set complete-=k complete+=k`
 
 ### Reference
 
