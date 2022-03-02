@@ -6,7 +6,7 @@ tags:
 categories:
 - Docker
 cover: /img/Docker-Intro-I/docker-top.png
-top_img: 
+top_img: /img/Docker-Intro-I/docker-top.png
 ---
 
 Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到可移植的镜像中。这样的镜像可以被在任意的 Linux 或 Windows 等包含特定输入输出规则的机器上。它完全使用沙箱机制，相互之间无任何接口。

@@ -5,9 +5,8 @@ tags:
 - vim
 - cmd
 categories:
-- tools
+- cmd line tools
 - vim
-- cmd line
 cover: /img/command-line/1200px-Vimlogo.svg.png
 top_img: /img/command-line/1200px-Vimlogo.svg.png
 ---
