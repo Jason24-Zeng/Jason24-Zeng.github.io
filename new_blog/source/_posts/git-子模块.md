@@ -79,7 +79,45 @@ $ git push origin master
 git clone --recurse-submodules https://github.com/chaconinc/MainProject
 ```
 
-### 待续
+### clone 但忘记拉取子模块
+
+如果我们已经将项目 clone 到了本地，但是忘记拉取子模块，则我们可以执行如下指令：
+
+```shell
+git submodule update --init
+```
+
+它会执行 `git submodule init` 与 `git submodule update` 指令，去拉取并检出子模块。
+
+另外，如果子模块里面还有嵌套，我们可以执行以下指令，完成嵌套式的拉取和检出流程：
+
+```shell
+git submodule update --init --recursive
+```
+
+### 拉取子模块远端最新代码
+
+我们可能不会修改子模块代码，但是想要接受其子模块的最新修改，则我们可以进入子模块目录，执行 `git fetch` 和 `git merge` 指令，合并上游分支的新代码到本地。并使用 `git diff --submodule` 可以看到子模块修改的内容。如果我们这时提交更新，会让子模块锁定为别人修改后的新代码。即大家 `git submodule update --init` 初始化子模块代码会变成修改后的子模块代码。
+
+除此以外，还有一个更方便的指令完成上述拉取并检出子模块新修改的方法。就是使用如下指令
+
+```shell
+git submodule update --remote <submodule>
+```
+
+### 拉取主模块代码
+
+注意拉取主模块代码只执行 `git pull` 或者 `git pull --rebase` 是不够的，它只是检查到了子模块有修改，并递归得抓取修改，但是它并不会更新子模块，想要更新子模块，我们还需要执行 `git submodule update --init --recursive`。或者 `git pull` 加上参数 `--recurse-submodules` 实现自动化。
+
+在父级项目中，可能出现这样的情况：当我们拉取的提交中， 可能 `.gitmodules` 文件中记录的子模块的 URL 发生了改变。这时候执行 `git submodule update` 或者`git pull --recurse-submodules` 可能会发生错误，我们需要将新的 URL 复制到本地中:
+
+```shell
+git submodule sync --recursive
+```
+
+再使用新的 URL 更新子模块即可。
+
+
 
 ### Reference
 
