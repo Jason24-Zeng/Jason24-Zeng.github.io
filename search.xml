@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title>Effective C++ (IV)</title>
+      <link href="/2022/03/24/Effective-C-IV/"/>
+      <url>/2022/03/24/Effective-C-IV/</url>
+      
+        <content type="html"><![CDATA[<p>这章主要是对于良好 C++ 接口的设计与声明提出意见与建议。而软件设计，就是以一般性的构想出发，逐步实现整体结构，以允许特殊接口开发的步骤。使用以下提到的准则，有利于我们实现代码开发的正确性，高效性，封装性，维护性，延展性以及协议的一致性。</p><h2 id="Item-18-让接口容易正确使用且不易误操作"><a href="#Item-18-让接口容易正确使用且不易误操作" class="headerlink" title="Item 18. 让接口容易正确使用且不易误操作"></a>Item 18. 让接口容易正确使用且不易误操作</h2><p><strong>make interfaces easy to use correctly and hard to use incorrectly</strong></p><p>日常工作中，程序员如果使用 C++，一定会接触到各式各样的接口。比如函数接口、类接口、模板接口。而接口是客户与程序员开发代码的互动手段。好的代码应该具有这样的要求，当客户使用某个接口时，如果该接口不能获得预期结果，则代码不该通过编译。</p><p>要实现这个要求，则程序员在设计时需要考虑客户可能产生的错误。</p><p>需要记住：</p><ul><li><p>好的接口应该满足容易被正确使用却不容易被误用的条件。这应该是我们在实现每一个接口时需要尽可能考虑的事情。</p></li><li><p>接口的“正确使用”需要包括接口的一致性，以及内置类型的行为兼容。</p></li><li><p>接口的“不易误用”则要求在类型创立时限制类型操作，尽可能减少对象值被无意修改的可能性，消除客户的资源管理责任等。</p></li><li><p><code>shared_ptr</code> 允许 custom deleter，这可以防范动态链接错误，可被用来自动解除 mutex 上。</p></li></ul><h2 id="Item-19-像设计-type-一样设计-class"><a href="#Item-19-像设计-type-一样设计-class" class="headerlink" title="Item 19. 像设计 type 一样设计 class"></a>Item 19. 像设计 type 一样设计 class</h2><p><strong>Treat class design as type design</strong></p><p>与其他 Object-Orient Program Language 一样，当我们设计一个新类时，我们实际也是定义了一个新类型。而大部分时间，我们实际上都是在扩展我们的 type system。我们需要思考重载函数和操作符，控制内存的 allocate，以及定义对象初始化与终结销毁等。因此，我们需要像语言设计者设置语言内置类型一样得谨慎研究class 的设计。</p><p>对于设计每一个 class，我们都需要考虑如下的问题：</p><ul><li><p>新类型的对象应该如何被创建和销毁？这会影响类的 constructor, desctructor, 以及内存分配与释放函数（operator new, operator new[],  operator delete 和 operator deletep[]）的设计</p></li><li><p>对象的初始化与对象的赋值应该有什么区别？</p></li><li><p>新类型的对象如果被 pass-by-balue，会发生什么？copy constructor 用来定义一个类型的 pass-by-value 如何实现</p></li><li><p>什么是新类型的“合法值”？</p></li><li><p>新类型需要配合某个 inheritance graph 继承图谱么</p></li><li><p>新类型需要什么样的转换</p></li><li><p>什么样的操作符合函数对新类型是合理的？</p></li><li><p>什么样的标准函数应该驳回，我们必须将其声明为 private。</p></li><li><p>谁该取用新类型的成员，这决定了类中哪个成员是 public 的，哪个是 protected 的，哪个是 private 的。也会帮助我们决定哪个 class 或 function 应该是 friend，以及应该实现一个怎样的嵌套关系。</p></li><li><p>什么是新类型的 undeclared interface</p></li><li><p>这个新类型有多么一般化？这个多出现在基类构建与类模板构建上。</p></li><li><p>真的需要新类型么？</p></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> coding </category>
+          
+          <category> C++ </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> C++ </tag>
+            
+            <tag> 书籍笔记 </tag>
+            
+            <tag> Design &amp; Declarations </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>github 国内内网加速</title>
       <link href="/2022/03/24/github-%E5%9B%BD%E5%86%85%E5%86%85%E7%BD%91%E5%8A%A0%E9%80%9F/"/>
       <url>/2022/03/24/github-%E5%9B%BD%E5%86%85%E5%86%85%E7%BD%91%E5%8A%A0%E9%80%9F/</url>
