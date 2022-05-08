@@ -2,17 +2,15 @@
 title: C++ Standard Library
 date: 2022-05-08 17:04:55
 tags:
--STL
--C++
-category:
--C++
+- STL
+- C++
+categories:
+- C++
 ---
 
 ## 前言
 
 作为一名进入职场快一年的员工，如果还没有去具体了解标准库的内容，以及其实现和构造，会是一件比较 shameful 的事情。为了弥补这块缺失，我特别开启这篇博客，用以记录在学习 C++ 标准库中的所知，以及可能的所感。
-
-
 
 ## Container 容器
 
