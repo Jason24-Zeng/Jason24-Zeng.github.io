@@ -21,6 +21,8 @@ top_img: /img/gdb-debug-调试/gdb.jpeg
 
 [在 mac 下安装 GNU 软件包](https://segmentfault.com/a/1190000011755622)
 
+[PermissionsDarwin](https://sourceware.org/gdb/wiki/PermissionsDarwin)
+
 ### 前言
 
 GDB 是 GNU Debugger 的缩写，是 UNIX 及 UNIX-like 系统的强大调试工具。可以用于对 c，c++, fortan, go，java 等的调试。是一个程序员必须装备的利器。本篇文章主要以 c++ 程序为例，介绍 GDB 启动调试的多个方法。
@@ -299,3 +301,55 @@ gdb
 - `print *arr@len`，打印一个数组
 
 - `watch VARIABLE` 观察一个变量的变化，也就是当我们进入 gdb 后，设置对某个变量的观察，随着我们 step-by-step 得运行指令或者运行到下一个断点前。当该变量在这个间断中发生变化，都会有改变信息打出来。主要是导致改变的行号以及变化的内容。
+
+- `list` 或 `l`，我们可以查看代码的某一部分。
+
+- `frame` 或`f` 展示代码目前运行到了哪个位置
+
+- `step` 或 `s` 表示进入当前行的函数内部
+
+- `backtrace` 或 `bt`， 则是与 `step` 相辅相成的一个概念，即生成这个函数与 `main` 函数之间的调用关系。
+
+- `info b` 列举所有断点的信息
+
+- `delete BREAK_NUM` 删除某个 `info b` 中对应 `NUM` 的断点
+
+- 
+
+#### 训练前准备
+
+首先我们需要在 mac 上安装 Homebrew 并用它来安装相关 GNU 编译工具，以及 gdb 等插件。
+
+```shell
+# 安装 Homebrew
+
+# 安装 bash
+brew install bash
+
+# 安装 coreutils
+brew install coreutils
+
+# 安装 gawk
+brew install gawk
+
+# 安装 gnu-sed
+brew install gnu-sed
+
+# 安装 gdb，并顺带安装 tmux
+brew install gdb
+
+# 修改 ~/.bashrc，~/.vimrc 与 ~/.dir_colors 使 base 的可视化效果更好
+vim ~/.bashrc
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
+alias ls='ls -F --show-control-chars --color=auto'
+eval `gdircolors -b $HOME/.dir_colors`
+alias awk=gawk
+alias sed=ased
+
+vim ~/.vimrc
+syntax on
+
+gdircolors --print-database > ~/.dir_colors
+```
+
+##### 
