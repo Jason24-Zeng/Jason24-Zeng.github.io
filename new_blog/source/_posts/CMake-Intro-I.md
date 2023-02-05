@@ -1,5 +1,5 @@
 ---
-title: Cmake-Intro-I
+title: Cmake-Intro-I -- CMakeLists.txt
 date: 2022-08-03 22:07:41
 tags: 
 - C++
@@ -343,89 +343,57 @@ install(CODE "execute_process(COMMAND ${PROJECT_SOURCE_DIR}/bin/install_data.sh
                                 -m ${DATA_INSTALL_MODE})")
 ```
 
-## 执行编译指令 shell 脚本
+## set 使用讲解
+
+在 set 一些参数时，我们可能会碰到一些一眼无法识别其含义的超参数，比如
+
+```cmake
+set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "build type")
+```
+
+中出现的 `CACHE` and `STRING` 的含义。这个 Section 主要就是尝试解释这部分含义。
+
+可以参考 [Cmake set Intro](https://cmake.org/cmake/help/v3.0/command/set.html)，
+
+首先，什么是 CACHE，中文翻译是缓存，即暂时存放到某一个"存储"中，这样当多次调用的时候，都可以从这个"存储"中获取，获取的速度会比较快。在 cmake 中，需要区分两个概念：normal variable 和 cache variable，普通变量和缓存变量。普通变量是一个局部变量，只能在同一个工程中使用，会有作用域限制和区分。缓存变量是一个全局变量，在同一个CMake工程中任何地方都可以使用。````
+
+```cmake
+set(<variable> <value>... CACHE <type> <docstring> [FORCE])
+```
+
+> Within CMake sets `<variable>` to the value `<value>`. `<value>` is expanded before `<variable>` is set to it. Normally, set will set a regular CMake variable. If CACHE is present, then the `<variable>` is put in the cache instead, unless it is already in the cache. See section ‘Variable types in CMake’ below for details of regular and cache variables and their interactions. If CACHE is used, `<type>` and `<docstring>` are required. `<type>` is used by the CMake GUI to choose a widget with which the user sets a value.
+
+通常，set 会设置一个常规的 Cmake 变量，如果 CACHE 这个 term 存在，则 变量会被放到 cache 里，除非它已经在 cache 中了。当 使用 CACHE 时，类型和文本字符串必须被提供，类型被 CMake GUI 使用去选择哪个 widget 用户设定一个值。
+
+**还有一种方法能够设置CACHE变量，就是通过cmake命令的-D选项，可以添加一个CACHE变量**
+
+CACHE作用如下：
+
+- 如果缓存中存在同名的变量，根据FORCE来决定是否写入缓存：如果没有FORCE，这条语句不起作用，使用缓存中的变量；如果有FORCE，使用当前设置的值。
+  
+  - 注意，如果是FORCE，也能修改-D选项设置的CACHE变量，所以有可能传入的生成命令选项是无效的。
+
+- 如果缓存中不存在同名的变量，则将这个变量写入缓存并使用。
+
+缓存变量也可以设置只在本文件内生效，将STRING类型改为INTERNAL即可。
+
+### Cache 总结
+
+正常使用的时候，如果有多层CMakeLists.txt，需要跨文本的变量，应该使用CACHE类型，如果只是当前文本的变量，则不需要使用CACHE，更重要的是，应该避免使用同名的普通和缓存变量。另外，由于CMake没有有效的清除缓存的方法，如果要彻底清除缓存，需要删除build或者release文件夹的所有文件。
+
+### OpenSSL 安装 mac
 
 ```shell
-readonly CURR_WORK_DIR=$(dirname $(readlink -f $0))
-readonly SCRIPT_NAME=${0##*/}
+brew update
+brew install openssl
+echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
+source ~/.bash_profile
 ```
-
-Note:
-
-### 1. `readlink`
-
- `readlink` 是 Linux 系统的常用工具，主要用来找出符号连接所指向的位置。官方文档中的解释是 
-
-```textile
-print valuee of a symbolic link or canonical file name
-```
-
-也就是说，它会去得到符号链接的原路径。比如：
-
-```shell
-$ readlink /usr/bin/awk
-/etc/alternatives/awk ---获取软链原路径，可能还不是真实路径
-$ readlink /etc/alternatives/awk
-/usr/bin/gawk    --- binary 的真实路径
-```
-
-需要注意 `-f` 选项可以理解为 recursively readlink，直到找到符号链接的最原始路径。
-
-```shell
-$ readlink -f /usr/bin/awk
-/usr/bin/gawk
-```
-
-### 2. `$0` and `${0##*/}`
-
-`$0`会展开 shell 或这 shell 脚本的名字，这会在 shell 初始化的时候实现。
-
-如果 Bash 被文件 command invoke， `$0` 被设定为文件名
-
-如果 Bash 启动是使用 `-c` 选项，则 `$0` 被设定为那个字符串执行时的第一个入参，前提是有一个参数存在。
-
-比如：
-
-如果你执行
-
-```shell
-/usr/bin/example.sh #execute the shell script
-```
-
-`$0` 将会是 `/usr/bin/example.sh`
-
-而如果你当前目录是 `/usr`，你也可以使用下面语句调用同一个脚本
-
-```shell
-./bin/example.sh
-```
-
-`$0` 将会是 `./bin/example.sh`
-
-`${0##*/}` 和 `${0%/*}`，被称为参数扩展 parameter expansion。
-
-`#`，意味着我们可以展开 `$0` 在去除前面的特定前缀之后，而我们这里的情况则是 `*/` ，如果只有一个 `#`，意味着寻找是非贪婪 (non-greedy) 的，它会找到第一个 `/` 就停止，并去除掉 第一个 `/`  之前的所有内容，而如果有两个 `#`，则它会贪婪得去掉所有 `/` 之前的内容。比如：
-
-```shell
-$ var = "foo/bar/baz"
-$ echo "${var#*/}"
-bar/baz
-$ echo "${var##*/}"
-baz
-```
-
-`${0%/*}` 展开包含在 argument 0 之内的值，在取出 `/*` 的字符串后缀之后，比如 
-
-```shell
-$ var = "foo/bar/baz"
-$ echo "${var%/*}"
-foo/bar
-```
-
-
 
 
 
 ## Reference
 
 [如何用cmake编译](https://zhuanlan.zhihu.com/p/59161370#:~:text=CMake%E6%98%AF%E4%B8%80%E7%A7%8D%E8%B7%A8,so(shared%20object)%EF%BC%89%E3%80%82)
+
+[CMake中变量总结 | 拾荒志](https://murphypei.github.io/blog/2018/10/cmake-variable)
