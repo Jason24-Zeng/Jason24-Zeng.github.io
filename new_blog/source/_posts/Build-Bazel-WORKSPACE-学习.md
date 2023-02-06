@@ -8,10 +8,6 @@ categories:
 - build tool learning
 ---
 
-
-
-
-
 ## 场景 I
 
 ### `new_local_repository` 使用
