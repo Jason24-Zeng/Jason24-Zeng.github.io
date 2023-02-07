@@ -200,7 +200,94 @@ Interface* MakeAdapter(const T& obj, const P& arg) {
 
 局部类有一个独特的特征：他们是 final 的。外部用户不能从一个函数内部的类继承。如果没有局部类，我们不得不在一个隔离的翻译单元中增加一个未命名的命名空间。
 
-### 将常实数映射成类型
+### P1 将实常数映射成类型
+
+有一个非常简单的模板，对许多泛型编程 idioms（习语）有用：
+
+```cpp
+template <int v>
+struct Int2Type {
+    enum {value = v};
+};
+```
+
+`Int2Type` 对输入的不同常实数会生成不同的类型，这是因为不同的模板实例化是不同的类型。另外，产生这个类型的值，会被保存在枚举成员 `value` 中
+
+这个模板为什么被广泛应用呢？无论何时我们需要给一个常实数附以类型时，我们都可以使用它。通过这个方式，我们可以依赖编译期计算的结果，去选择不同的函数，从而可以有效得依赖一个常实数实现静态分派（static dispatch）
+
+典型的，在如下两个情况都满足的时候，我们应该使用 `Int2Type` ：
+
+1. 取决于一个编译期常数，我们会去挑选几个不同函数中的一个
+
+2. 我们需要在编译期做这样的分派
+
+对于运行期的分派，我们可以简单地使用 `if-else` 语句或者 `switch` 的语句。运行期的消耗在大多数情况下可忽略不计。但是，我们通常不这么做。（不这么做的原因不是运行期更耗时）`if-else` 语句要求两个分支都得成功编译，即使我们在编译期时就可以知道 `if` 条件的选择情况。
+
+下面通过一个例子来解释上面这句话的意思。
+
+假设我们正在设计一个泛型容器 `NiftyContainer`，这个容器被包含的类型模板化：
+
+```cpp
+template <class T> class NiftyContainer {
+    ...
+};
+```
+
+假使 `NiftyContainer` 容器包含了指向类型 `T` 的对象的指针。为了复制包含在容器中的对象，我们要么调用它自身的拷贝构造函数，要么调用一个为多态类型（polymorhic types）准备得虚函数 `Clone()`。至于选择哪种函数，我们可以通过一个布尔类型的模板参数获得信息。
+
+为此，我们很容易想到以下的实现方法：
+
+```cpp
+template <typename T, bool isPolymorphic>
+class NiftyContainer {
+    ...
+    void DoSomething() {
+        T* pSomeObj = ...;
+        if (isPolymorphic) {
+            T* pNewObj = pSomeObj->Clone();
+            // ...多态算法...
+        } else {
+            T* pNewObj = new T(*pSomeObj);
+            // ...非多态算法...
+        }
+    }  
+};
+```
+
+这样实现可能让编译器通不过编译。比如，多态算法要求使用 `Clone` 成员函数，如果任何类型没有定义一个这样的成员函数，`NiftyContainer::DoSomething` 将不能编译。的确我们在编译的时候已经能决定执行哪个 if 状态了，但是，编译器不会管这些，他会尝试编译两个分支，即使优化器后面会删除无用的代码。也就是说，我们可能会出现这样的情况：我们尝试调用 `NiftyContainer<int, false>` 的 `DoSomething` 函数，编译器却在 `pObj->Clone()` 处报错了。
+
+另外，非多态分支的代码也可能编译失败，如果 `T` 是一个多态类型并且非多态代码分支尝试 `new` 一个 `T(*pObj)` ，这也可能导致代码编译失败：如果 `T` 禁用了拷贝构造函数或者让拷贝构造函数变成私有的。PS. 好的多态类就应该做这些考虑。
+
+让编译器不用操心代码是否是无用，这个想法是好的，但是有更让人满意的解决方法，在使用这个简洁的解决方法的时候，我们会用到 `Int2Type`：它会根据布尔值 `isPolymorphic` 的不同，将其即时得转变成两个不同的类型，然后我们就可以利用简单的重载去使用 `Int2Type<isPolymorhic>` 啦。代码重构如下：
+
+```cpp
+template <typename T, bool isPolymorphic>
+class NiftyContainer {
+ private:
+    void DoSomething(T* pObj, Int2Type<true>) {
+        T* pNewObj = pObj->Clone();
+        // ...多态算法...
+    }
+    void DoSomething(T* pObj, Int2Type<false>) {
+        T* pNewObj = new T(*pSomeObj);
+        // ...非多态算法...
+    }
+ public:
+    void DoSomething(T* pObj) {
+        DoSomething(pObj, Int2Type<isPolymorphic>());
+    }
+};
+```
+
+这个重载实现了两个需要的算法，这上面的 trick 点在于，因为编译器不会编译它们不适用的模板函数，它只检查它们语法。这样，我们就在编译期实现了模板代码的分派。
+
+### 类型到类型的映射
+
+
+
+
+
+
 
 ## Reference
 
