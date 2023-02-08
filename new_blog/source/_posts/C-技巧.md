@@ -281,9 +281,147 @@ class NiftyContainer {
 
 这个重载实现了两个需要的算法，这上面的 trick 点在于，因为编译器不会编译它们不适用的模板函数，它只检查它们语法。这样，我们就在编译期实现了模板代码的分派。
 
-### 类型到类型的映射
+### P1 类型到类型 Type2Type 的映射
+
+前面已经提到，我们不能对模板函数进行偏特化，但是，有时我们又需要模拟相似的功能。参考下面函数，它会通过将参数传给构造函数的方式，创建一个新的对象。
+
+```cpp
+template <class T, class U>
+T* Create(const U& arg) {
+    return new T(arg);
+}
+```
+
+现在假设我们的应用中有一个规则：
+
+1. 类型为 `Widget` 的对象是不能碰的遗留代码，我们想要构建必须传入两个参数，第二个参数必须是一个固定值，比如 -1。
+
+2. 从 `Widget` 继承过来的类，不会有这个问题。
+
+现在的问题是：我们怎么特化 `Create` 来让它用和其他类型不同的方式处理 `Widget`? 显而易见的一种方法，是创造一个单独的`CreateWidget` 函数去解决特殊的问题。但是，你没有一个统一的接口去创建 `Widget`s 和它的继承对象，从而让 `Create` 在任何泛型代码中不好用。 
+
+就像刚开始就提到的，我们不能偏特化一个函数，具体在这个例子中便是：
+
+```cpp
+template <class U>
+Widget* Create(const U& arg) {
+    return new T(arg, -1);
+}
+```
+
+解决这一类问题仅有的工具是重载 overloading，一种办法是传一个类型为 T 的 dummy 对象：
+
+```cpp
+template <class T, class U>
+T* Create(const U& arg, T /* dummy */) {
+    return new T(arg);
+}
+template <class U>
+Widget* Create(const U& arg, Widget /* dummy */) {
+    return new Widget(arg, -1);
+}
+```
+
+这样的解决方式很容易让我们创建一个随意的复杂对象，但是我们却永远不会使用它。我们需要个更轻便的载体去将关于 `T` 的类型信息传给 `Create`，这时候我们就可以考虑使用 `Type2Type`，一个类型的代表，一个可以传递给重载函数的轻标识符。
+
+```cpp
+template <typename T>
+struct Type2Type {
+    typedef T OriginalType;
+}
+```
+
+可以看出 `Type2Type` 不包含任意值，但是有一个不同的类型引导实例化不同的 `Type2Type`，这正是我们想要的。有了这个工具，我们就可以轻松写下如下优化：
+
+```cpp
+template <class T, class U>
+T* Create(const U& arg, Type2Type<T>) {
+    return new T(arg);
+}
+template <class U>
+Widget* Create(const U& arg, Type2Type<Widget>) {
+    return new Widget(arg, -1);
+}
+// 使用 Create()
+String* pStr = Create("Hello", Type2Type<String>());
+Widget* pW = Create(100, Type2Type<Widget>());
+```
+
+`Create` 的第二个参数只是用来选择合理的重载，现在我们能对不同的 `Type2Type` 实例去特化 `Create`。
 
 
+
+### P2 类型选择
+
+有些泛型代码会根据一个布尔常数去选择两个类型中的一种。这一章就是要讨论这个的实现。
+
+举个前面提到的例子 `NiftyContainer`，假设我们想要在底层存储中使用 `std::vector`。显然，对多态类型我们必须存储指针而非值本身，而对非多态类型，我们可能想要存储值，因为这更加方便高效。
+
+首先是 `NifityContainer` 这个类：
+
+```cpp
+template <typename T, bool isPolymorphic>
+class NiftyContainer {
+    ...
+};
+```
+
+我们需要存储要么一个 `vector<T*>` （`isPolymorphic` 为 `true`）要么一个 `vector<T>` （`isPolymorphic` 为 `false`）。总之，我们需要根据 `isPolymorphic` 的值决定定义的  `ValueType`要么是 `T*`，要么是`T`。
+
+我们可以定义一个如下的特征类模板解决问题：
+
+```cpp
+template <typename T, bool isPolymorphic>
+struct NiftyContainerValueTraits {
+    typedef T* ValueType;
+};
+template <typename T>
+struct NiftyContainerValueTraits<T, false> {
+    typedef T ValueType;
+};
+template <typename T, bool isPolymorphic>
+class NiftyContainer {
+    ...
+    typedef NiftyContainerValueTraits<T, isPolymorphic>
+        Traits;
+    typedef typanme Traits::ValueType ValueType;
+};
+```
+
+这种处理问题的方式显得不必要的笨重，并且，他没法扩展，每次类型选择，我们都必须定义一个信息的特征类型模板。
+
+库类模板 `Select` 给我们提供了一个能完美解决问题的类型选择方法。它的定义使用了模板偏特化：
+
+```cpp
+template <bool flag, typename T, typename U>
+struct Select {
+    typedef T Result;
+};
+template <typename T, typename U>
+struct Select<false, T, U> {
+    typedef U Result;
+};
+```
+
+这里解释一下这个 `Select` 怎么工作的。
+
+1. 当 `flag` 为 `true` 时，编译器会使用第一个泛型定义因此 `Result` 等于 `T`
+
+2. 当 `flag` 为 `false` 时，特化的模板被使用，因此 `Result` 等于 `U`
+
+现在，我们就能更简单得定义 `NiftyContainer::ValueType` 了，而且也更容易扩展了
+
+```cpp
+template <typename T, bool isPolymorphic>
+class NiftyContainer {
+    ...
+    typedef typename Select<isPolymorphic, T*, T>::Result
+        ValueType;
+    ...
+};
+```
+
+### 在编译期检测可转化性和继承性
 
 
 
