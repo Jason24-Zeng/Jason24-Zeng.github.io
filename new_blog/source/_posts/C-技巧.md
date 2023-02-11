@@ -421,9 +421,132 @@ class NiftyContainer {
 };
 ```
 
-### 在编译期检测可转化性和继承性
+### P1 在编译期检测可转化性和继承性
 
+我们在实现模板函数和模板类时，经常会想一个问题：给定随意两种类型 `T` 和 `U` ，我们该怎么检测是否 `U` 为 `T` 的继承呢？在编译期发现这样的关系是在泛型库类实现高级优化的关键。在一个泛型函数中，如果我们能确定这个类实现了某一个特殊的接口，我们就可以根据这个信息去采用最佳算法。在编译器发现这个意味着我们不用使用 在编译期及其耗时的`dynamic_cast`。
 
+发现继承关系依赖一个甄别可转化性的更一般化的机制。而更一般的问题是，我们要怎么检测随机的一个类型 `T` 是否支持向 `U` 的自动转化。
+
+有一种解决方法，它会依赖 `sizeof` 的实现。`sizeof` 有着许多令人吃惊的力量：我们可以对任何表达式使用`sizeof`，不管这个表达式多么的复杂，它能返回表达式的大小，且不用拖到运行期。这意味着 `sizeof` 能意识到重载，模板实例化，转化规则等一切参与 C++ 表达式的东西。事实上，`sizeof` 背后暗含一个用来推到表达式类型的完整设施。最终，`sizeof` 会丢弃表达式并且只返回结果的大小。
+
+检测转换能力 的想法依赖于 `sizeof` 与 重载函数的共用。我们提供一个函数的两个重载，一个接受类型，并且将其转化成 `U`，另一个接受其他任何类型。我们用一个临时的类型 `T` 去调用重载函数，而`T` 对 `U` 的可转换能力正式我们想要判断的。如果前一个调用 `U` 的函数被调用，那我们知道 `T` 能转化成`U`，如果的另一个函数被调用，那么 `T` 就不能被转化成 `U`。我们设计两个重载函数返回不同大小的类型，然后便可以使用`sizeof` 去判断了。这两个类型本身不重要，只要它们大小不同就行。
+
+ok，解释到这里了，我们来具体实现以下它。
+
+首先，我们创建两个不同大小的类型，显然 `char` 和 `long double` 有不同的大小，但是 C++ 标准并不保证一定不同，一个傻瓜式的定义如下
+
+```cpp
+typedef char Small;
+class Big {char dummy[2]};
+```
+
+根据定义，`sizeof(Small)` 为 1，`Big` 的大小未知，但一定大于 1，这是我们唯一能保证的东西。
+
+下一步，我们需要两个重载函数，一个接受 `U` 并且返回一个 `Small`
+
+```cpp
+Small Test(U);
+```
+
+我们怎么写一个函数接受其他任何呢？一个模板不是解决方法，因为模板总是要求最佳匹配条件，因此掩盖可转化的类型。我们需要一个匹配，这个匹配会比自动转化更糟糕，也就是，转化只会在没有自动转化时发生。我很快看了一下施行于函数调用的转化规则，然后发现了所谓的省略符匹配规则（ellipsis match），这时最差的匹配了，也是我们正好希望的：
+
+```cpp
+Big Test(...);
+```
+
+传一个 C++ 的对象到有省略符的函数会有未定义的结果，但这不重要。事实上没有东西会真的调用这个函数，它甚至不会实现。想想 `sizeof` 实际不会衡量函数的入参。
+
+现在，我们需要实施 `sizeof` 到 `Test` 的调用，给它传递一个 `T` 作为入参。
+
+```cpp
+const bool convExists = sizeof(Test(T())) == sizeof(Small);
+```
+
+对，`Test` 的调用得到一个默认构造对象 `T()`，然后 `sizeof` 会分离出表达式结果的大小，它要么是 `sizeof(Small)` 要么是 `sizeof(Big)`，这取决于是否编译器能发现一种转化。
+
+有一个小问题，如果 `T` 的默认构造函数是私有的，表达式 `T()` 会在编译时失败，我们的所有努力都会没有回报，不够新云的是，有一个非常简单的解决方法，就是使用一个稻草人函数（strawman function），它返回一个 T 对象（记住，我们在处于 `sizeof` 的神奇世界中，没有表达式会被实际求值）。因此，编译器和我们都会非常满意。
+
+```cpp
+T MakeT();  // 没有实现，不止不会做任何是，甚至在运行期都没有真实存在过
+const bool convExists = sizeof(Test(MakeT())) == sizeof(Small);
+```
+
+现在我们把这个函数类的所有东西包裹在一起，隐藏类型推导的所有细节，只展现结果：
+
+```cpp
+template <class T, class U>
+class Coversion {
+    typedef char Small;
+    class Big {char dummy[2];};
+    static Small Test(U);
+    static Big Test(...);
+    static T MakeT();
+ public:
+    enum {
+        exists = sizeof(Test(MakeT())) == sizeof(Small);
+    };
+};
+```
+
+现在，我们可以测试 `Coversion` 类模板：
+
+```cpp
+int main() {
+    using namespace std;
+    cout << Conversion<double, int>::exists << ' '
+         << Conversion<char, char*>::exists << ' '
+         << Conversion<size_t, vector<int>>::exists << ' ';
+}
+```
+
+这个小程序会打印 `1 0 0`，注意虽然 `vector` 的确实现了一个构造函数，这个函数获取一个入参 `size_t`，但是这个转化测试返回 0，因为那个构造函数时 explicit 的。explicit 构造函数时没法担任转换函数的。
+
+我们能在 `Coversion` 中增加一个常数 `sameType`，如果 `T` 和 `U` 表示同一个类型时为 `true`：
+
+```cpp
+template <class T, class U>
+class Conversion {
+    ...同上...
+    enum {sameType = false};
+}
+```
+
+我们通过 `Conversion` 的一个片特护来实现 `sameType`：
+
+```cpp
+template <class T>
+class Conversion<T, T>
+{
+ public:
+    enum {exists = 1, sameType = 1};
+};
+```
+
+最后，有了 `Conversion` 的帮助，我们现在可以非常容易得定义继承了：
+
+```cpp
+#define SUPERSUBCLASS(T, U) \
+    (Conversion<const U*, const T*>::exists && \
+    !Conversion<const T*, const void*>::sameType)
+```
+
+如果 `U` 是 public 继承自 `T`,  或者 `T` 和 `U` 是同一类型的，`SUPERSUBCLASS(T, U)`会传入 `true`。当 `SUPERSUBCLASS` 对 `const T*` 和 `const U*` 做可转化评估时，只有三种情况 `const U*` 能隐式转化成 `const T*`：
+
+1. `T`  和 `U` 同类型
+
+2. `T` 是 `U` 的模糊 public 基类
+
+3. `T` 是 `void`
+
+最后一种情况被第二个测试消除了。实际上，接受第一种情况作为 `is-a` 的退化情况是非常有用的，因为在实际使用中，我们经常会考虑一个类是它自己的 superclass。如果我们需要更严格的测试，可以这么写：
+
+```cpp
+#define SUPERSUBCLASS_STRICT(T, U) \
+    (SUPERSUBCLASS(T, U) && \
+    !Conversion<const T, const U>::sameType)
+```
+
+为什么代码都加上`const` 修饰？因为我们不想因为 `const` 导致转型失败，如果模板代码实施了 两次 `const`，第二个 `const` 会被忽略掉，总之，保险起见，我们在 `SUPERSUBCLASS` 中都是用 `const`。
 
 
 
