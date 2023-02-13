@@ -550,6 +550,82 @@ class Conversion<T, T>
 
 
 
+### P2 一个关于 `type_info` 的外覆类（wrapper）
+
+标准 C++ 提供了一个类：`std::type_info` ，它能让我们在运行期调查类的类型。通常 `type_info` 会和 `typeid` 操作符并用，后者会传一个指向 `type_info` 对象的引用：
+
+```cpp
+void Fun(Base* pObj) {
+    // 比较两个 type_info 对象，它们分别与 *pObj 和 Derived 有关
+    if (typeid(*pObj) == typeid(Derived)) {
+        // pObj 事实上指向一个 Derived 对象
+    }
+    ...
+}
+```
+
+`typeid` 操作符返回一个指向类型为 `type_info` 对象的引用。除了支持比较算法 `operator==` 和 `operator!=` 以外，`type_info`提供了额外的两个函数。
+
+- `name` 成员函数，以 `const char*` 的格式，返回一个类型的文本表达。因为没有将类名映射成字符串的标准方法，所以我们不应该期望 `typeid(Widget)` 返回 "Widget" 这样的字符串。一个比较令人满意的做法是让 `type_info:name` 对所有类型返回空字符串。
+
+- `before` 成员函数，它给 `type_info` 对象带来了一种次序关系。使用 `type_info::before` ，我们能对 `type_info` 对象建立索引
+
+不幸的是，`type_info` 的好用功能被包装得难以使用。`type_info` 类将拷贝构造函数和拷贝赋值操作符禁用，这使得存储 `type_info` 对象变得不可能。不过我们可以存储指向 `type_info` 对象的指针。这个通过 `typeid` 返回的对象，采用了 static 的存储方式，因此我们不用担心其寿命，但我们得关注指针间的辨识。
+
+C++ 标准不能保证每次调用 `typeid(int)` 能返回指向同一个 `type_info` 对象的引用。如此一来，我们没法比较指向 `type_info` 对象的指针了。为此，我们必须将指针存储到 `type_info` 对象中，并且通过运用 `type_info::operator==` 到解引用的方式，进行指针的比较。
+
+如果我们想要对 `type_info` 对象进行排序，我们事实上必须存储指向 `type_info` 的指针，并且这次我们必须使用 `before` 这个成员函数。这样一来，如果我们想要使用 STL 的有序容器，必须写一个小的仿函数 `functor` 并处理指针。
+
+这些笨拙到足以让我们委派一个关于 `type_info` 的外覆类来存储指向一个 `type_info` 的指针，并且，这个外覆类还需要提供：
+
+- 所有 `type_info` 的成员函数
+
+- value 的语义（与 reference 相对），即 public 的拷贝构造函数和拷贝赋值操作符
+
+- 定义 `operator<` 和 `operator==` 来保证比较的无暇
+
+Loki 定义了一个外覆类 `TypeInfo`，它实现了一个与 `type_info` 有关的，非常方便的外覆类，其大纲如下：
+
+```cpp
+class TypeInfo {
+  public:
+    TypeInfo();
+    TypeInfo(const std::type_info&);
+    TypeInfo(const TypeInfo&);
+    TypeInfo& operator=(const TypeInfo&);
+    bool before(const TypeInfo&) const;
+    const char* name() const;
+ private:
+    const std::type_info* pInfo_;  
+};
+// 比较操作符
+bool operator==(const TypeInfo&, const TypeInfo&);
+bool operator!=(const TypeInfo&, const TypeInfo&);
+bool operator<(const TypeInfo&, const TypeInfo&);
+bool operator>(const TypeInfo&, const TypeInfo&);
+bool operator<=(const TypeInfo&, const TypeInfo&);
+bool operator>=(const TypeInfo&, const TypeInfo&);
+```
+
+由于其转换构造函数接受一个 `std::type_info` 的入参，我们能直接比较类型为 `TypeInfo` 和 `std::type_info` 的对象，如下：
+
+```cpp
+void Fun(Base* pObj) {
+    TypeInfo info = typeid(Derived);
+    ...
+    if (typeid(*pObj) == info) {
+        // pBase 事实上指向一个 Derived 对象
+    }
+    ...
+}
+```
+
+拷贝和比较 `TypeInfo` 对象在许多情况下都非常重要。
+
+### `NullType` 和 `EmptyType`
+
+
+
 ## Reference
 
 - [The C++ in-depth series] Alexandrescu, Andrei_Meyers, Scott_Vlissides, John - Modern C++ design_ generic programming and design patterns applied (2001_2011, Addison-Wesley Professional) 
