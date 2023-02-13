@@ -88,8 +88,11 @@ void* somePointer = ...;
 char c = safe_reinterpret_cast<char>(somePointer);
 ```
 
-这样的话，报错信息就可能变成：Error: Cannot convert ERROR_Destination_Type_Too_Narrow to CompileTimeChecker
-\<false\>.
+这样的话，报错信息就可能变成：
+
+```cpp
+Error: Cannot convert ERROR_Destination_Type_Too_Narrow to CompileTimeChecker<false>
+```
 
 ### P0 模板偏特化
 
