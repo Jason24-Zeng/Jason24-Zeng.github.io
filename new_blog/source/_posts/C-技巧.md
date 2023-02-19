@@ -625,7 +625,65 @@ void Fun(Base* pObj) {
 
 拷贝和比较 `TypeInfo` 对象在许多情况下都非常重要。
 
-### `NullType` 和 `EmptyType`
+### P2 `NullType` 和 `EmptyType`
+
+Loki 定义了两个非常简单的类型: `NullType` 和 `EmptyType`，我们能在类型计算中使用它们去编辑边界 case。
+
+`NullType` 是一个用于作为类型的空标记（null marker）的类：
+
+```cpp
+class NullType {};
+```
+
+我们通常不创造类型为 `NullType` 的对象，它只被使用来暗示"我的类型不被人感兴趣"（一般是用作模板特化的终止，有点类似于 `enable_if` 的使用）。
+
+而第二个 helper 类型时 `EmptyType`，它的定义是：
+
+```cpp
+struct EmptyType {};
+```
+
+`EmptyType` 是一个可被继承的合法类型，且我们可以传递 `EmptyType` 的对象。同门可以使用这个类型作为模板的默认类型。
+
+### P0 Type Traits
+
+Traits 是一种泛型编程技巧，它允许在编译期做一些基于类型的决策，很像我们想要在运行期基于类做的决策。通过加上这个可以解决许多软件工程难题的间接层，traits 能让我们在「类型确定」以外的地方做类型相关的决策。这可以让最终的代码更简洁，更可读，并且更好维护。
+
+通常，当我们的泛型程序需要的时候，我们要写自己的 trait 模板和类。可是，有些 traits，可被用于任何类型，它们可以帮助我们根据类别特性去更好地裁剪模板代码。
+
+比如，设想一下，我们要是想实现一个拷贝算法：
+
+```cpp
+template <typename InIt, typename OutIt>
+OutIt Copy(InIt first, Init last, OutIt result) {
+    for(; first != last; ++first, ++result) {
+        *result = *first;
+    }
+}
+```
+
+理论上，我们不必实现这样的算法，因为它与 `std::copy` 功能重复，但我们可能想要对某些特殊的类型特化我们的拷贝链路。
+
+假设我们为一个多处理器机器开发代码，这台机器有一个非常快的 `BitBlast` 原生函数，并且我们也想尽可能充分利用好这个原生函数。
+
+```cpp
+// Prototype of BitBlast in "SIMD_Primitives.h"
+void BitBlast(const void* src, void* dest, size_t bytes);
+```
+
+当然 `BitBlast` 这能在拷贝原生类型和简单的旧数据结构时使用。我们不能对一个有 nontrival 拷贝构造函数的类型使用 `BitBlast`。然后，我们想要实现 `Copy`  函数，在可能的时候，它可以利用好 `BitBlast`, 而对于一些精巧类型，该函数会退化到使用更广泛，保守的算法。这样， `Copy` 操作符在原生类型的范围内就会自动的跑的更快了。
+
+为了实现这个效果，我们需要对类型做两个测试：
+
+1. `InIt` 和 `OutIt` 是通常的指针么？（相比更 fancy 的迭代器类型而言）
+
+2. `InIt` 和 `OutIt` 指针指向的类型允许 bitwise 的拷贝么？
+
+如果我们能在编译器找到这些问题的答案，并且这两个答案都是 yes，我们就可以使用 `BitBlast`。否则，我们必须依赖最通常的 `for` 循环。
+
+而 Type Traits 就能帮忙解决这个问题。
+
+
 
 
 
