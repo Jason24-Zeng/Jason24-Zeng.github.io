@@ -352,8 +352,6 @@ Widget* pW = Create(100, Type2Type<Widget>());
 
 `Create` 的第二个参数只是用来选择合理的重载，现在我们能对不同的 `Type2Type` 实例去特化 `Create`。
 
-
-
 ### P2 类型选择
 
 有些泛型代码会根据一个布尔常数去选择两个类型中的一种。这一章就是要讨论这个的实现。
@@ -551,8 +549,6 @@ class Conversion<T, T>
 
 为什么代码都加上`const` 修饰？因为我们不想因为 `const` 导致转型失败，如果模板代码实施了 两次 `const`，第二个 `const` 会被忽略掉，总之，保险起见，我们在 `SUPERSUBCLASS` 中都是用 `const`。
 
-
-
 ### P2 一个关于 `type_info` 的外覆类（wrapper）
 
 标准 C++ 提供了一个类：`std::type_info` ，它能让我们在运行期调查类的类型。通常 `type_info` 会和 `typeid` 操作符并用，后者会传一个指向 `type_info` 对象的引用：
@@ -683,7 +679,65 @@ void BitBlast(const void* src, void* dest, size_t bytes);
 
 而 Type Traits 就能帮忙解决这个问题。
 
+#### 实现指针 traits
 
+Loki 定义了一个类模板 `TypeTraits` ，它收集了一些列泛型类型的 Traits。`TypeTraits` 使用内部模板特化，并且将结果暴露出来。
+
+大部分类型 traits 的实现依赖完全特化或者偏特化，比如，下面的代码决定是否一个类型 `T` 是否是一个指针：
+
+```cpp
+template <typename T>
+class TypeTraits {
+ private:
+    template <class U> struct PointerTraits {
+        enum { result = false };
+        typedef NullType PointeeType;
+    };
+    template <class U> struct PointerTraits<U*> {
+        enum { result = true };
+        typedef U PointeeType;
+    };
+ public:
+    enum { isPointer = PointerTraits<T>::result };
+    typedef PointerTraits<T>::PointeeType PointeeType;
+    ...
+};
+```
+
+第一个定义引入了 `PointerTraits` 类模板，他表示 `T` 不是一个指针，并且所谓的被指类型不能被运用。（`NullType` 是一个在不被运用的情况的占位符行别）
+
+第二个定义则是介绍了一种 `PointerTraits` 的偏特化，是一个可以匹配任何指针类型的特化体。对于指向任意东西的指针，这个特化都会被认为是一个比 「针对任何指针类型的泛型模板」更加合适的候选。总之，如果面对指针，则该特化体运行，`result` 被赋值为 `true`，而 `PointeeType` 被合理得定义。
+
+现在我们可以观察一下 `std::vector::iterator` 的实现，它是一个简谱的指针呢，还是一个精巧类型？
+
+```cpp
+int main() {
+    const bool IterIsPtr = TypeTraits<vector<int>::iterator>::isPointer；
+    cout << "vector<int>::iterator is " << iterIsPtr ? "fast" : "smart" << endl;
+}
+```
+
+相似的，`TypeTraits` 实现一个 `isReference` 常数和一个 `ReferenceType` 类型定义。对于一个引用类型 `T` ，`ReferencedType` 是一个 `T` 指向的类型，如果 `T` 是一个直接的类型（即非引用），`ReferenceType` 是 T 自己。
+
+检测指向成员的指针会有一些不同，需要的特化体如下：
+
+```cpp
+template <typename T>
+class TypeTraits {
+ private:
+    template<class U> struct PToMTraits {
+        enum { result = false };
+    };
+    template <class U, class V> struct PToMTraits<U V::*> {
+        enum { result = true };
+    };
+ public:
+    enum { isMemberPointer = PToMTraits<T>::result };
+    ...
+};
+```
+
+#### 检测基础类型
 
 
 
