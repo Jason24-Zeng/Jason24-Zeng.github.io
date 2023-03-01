@@ -3,7 +3,9 @@ title: C++ 技巧
 date: 2023-02-04 18:00:06
 tags: 
 - C++
+- Coding Technique
 categories:
+- Coding Language
 - C++
 passwd: 12346
 cover: /img/SearchEnginee/searchplatform.png
@@ -739,7 +741,144 @@ class TypeTraits {
 
 #### 检测基础类型
 
+`TypeTraits<T>` 实现了一个 `isStdFundamental` 编译期常数，这个常数会表明 `T` 是否是一个 C++ 标准里的基础类型。C++ 标准的基础类型包含类型 `type` 和所有数字类型，即浮点类型和整型。`TypeTraits` 定义了一堆常数 用来展现已知类型属于哪种类别的。
 
+可以简单提一下 `typelists`，其让检测「是否一个类型属于一系列已知类型」变得简单。目前，我们所需要了解的是一下表达：
+
+```cpp
+TL::IndexOf<T, TYPELIST_nn(comman-separated list of types)>::value
+```
+
+其中，nn 是类型列表中类型的个数，上面的表达式会返回 T 在列表中的位置（以零为 base），如果 T 不再列表中，就返回 -1。比如，当且晋档 T 是一个有符号整型时，表达式
+
+```cpp
+TL::IndexOf<T,TYPELIST_4(signed char, short int, int, long int)>::value
+```
+
+会大于等于 0 。
+
+针对基本类型， `TypeTraits` 有如下部分定义
+
+```cpp
+template <typename T>
+class TypeTraits {
+    ... as above ...
+ public:
+    typedef TYPELIST_4(unsigned char, unsigned short int, unsigned in, unsigned long int) UnsignedInts;
+    typedef TYPELIST_4(signed char, short int, int, long int) SignedInts;
+    typedef TYPELIST_3(float, double, long double) Floats;
+    typedef TYPELIST_3(bool, char, wchar_t) OtherInts;
+    enum { isStdUnsignedInt = TL::IndexOf<T, UnsignedInts>::value >= 0 };
+    enum { isStdsignedInt = TL::IndexOf<T, SignedInts>::value >= 0 };
+    enum { isStdIntegral == isStdUnsignedInt || isStdSignedInt ||
+        TL::IndexOf<T, OtherInts>::value >= 0 };
+    enum { isStdFloat = TL::IndexOf<T, Floats>::value >= 0 }; 
+    enum { isStdArith = isStdIntegral || isStdFloat };
+    enum { isStdFundamental = isStdArith || isStdFloat ||
+          Conversion<T, void>::sameType };
+    ...
+};
+```
+
+使用类型列表和 `TL::IndexOf` 给了我们快速推测类型信息的能力，因此我们不用写一个模板特化体多次。
+
+检测基础类型的真实实现更加复杂，允许更多厂家自行扩展类型（比如 `int64` 和 `long long`）
+
+#### 优化的参数类型
+
+在模板代码，我们优势需要回答如下问题。已知一个随意的类型 `T`，用什么办法传递和接收类型 `T` 的对象作为函数的参数最为高效？通常，最有效地方式是：当对象时精细类型时使用 by reference，而对纯量类型时使用 by value。对于精细类型，我们可以避免额外的临时开销（空间开销 + 时间开销），而对纯量类型，我们避免了使用引用的不直接性（时间开销）。
+
+需要认真对待的一个细节是：C++  不允许指向引用的引用，因此，如果 `T` 已经是一个引用，我们不能在它的基础上加一层引用。
+
+基于大量对函数进行参数优化的分析，我们设计了如下的算法。假设我们正在处理的参数类型为 `ParameterType`。
+
+> 如果 `T` 是某个类型的引用，`ParameterType` 和 `T` 一样，保持不变。因为引用的引用不被允许。
+> 
+> 反之，
+> 
+>     如果 `T` 是一个纯量类型 `int`，`float` 等， `ParameterType` 是 `T`。因为基础类型最好通过值传递。
+> 
+>     如果 `ParameterType` 是 `T` 的一个常量引用 `const T&`，通常，非基础类型最好以引用传递。
+
+这个算法的一个重要成就是：它避免了对引用进行引用的错误。比如，如果我们结合 `bind2nd` 与 `mem_fun` 标准库函数，这种错误会出现。
+
+实现 `TypeTraits::ParameterType` 非常容易，只要使用我们已经掌握的技巧以及之前定义的 traits - `ReferencedType` 和 `isPrimitive` 。
+
+```cpp
+template <typename T>
+class TypeTraits {
+    ... as above ...
+  public:
+      typdef Select<isStdArith || isPointer || isMemberPointer, T, ReferencedType&>::Result ParameterType;
+};
+```
+
+不幸的是，这个方案如果遇到「以值传递枚举类型时」会失败，因为没有已知的办法去决定是否一个类型是一个枚举类型。
+
+#### 去除 strip 装饰词
+
+已知一个类型 `T`，我们很容易借助 `const T` 取得常数版兄弟。但是，做其相反的操作会有点困难。同样的，优势我们可能想要去掉 `volatile` 这类修饰词 qualifier。
+
+举个例子，我们考虑构建一个智能指针，对染我们想要允许用户创建指向 `const` 对象的智能指针，比如 `SmartPtr<const Widget>`，我们依然需要在内部改变指针，使其指向 `Widget`。因此，在 `SmartPtr` 内部，我们需要从 `const Widget` 里获取到 `Widget`。
+
+实现一个 `const` 去除器比较简单，我们需要再次使用到模板的偏特化:
+
+```cpp
+template <typename T>
+class TypeTraits {
+    ... as above ...
+ private:
+     template <class U> struct UnConst {
+        typedef U Result;
+    };
+    template <class U> struct UnConst<const U> {
+        typedef U Result;
+    };
+ public:
+     typedef UnConst<T>::Result NonConstType;
+};
+```
+
+#### 使用 `TypeTraits`
+
+`TypeTraits` 能帮我们做许多有趣的事情。比如：我们可以通过前面这章的技巧来实现 Copy 函数，它会使用 `BitBlast` （和前面章节提到的一样）；我们可以使用 `TypeTraits` 去辨别两个迭代器的类别信息，并以 `Int2Type` 模板去分派 Copy 去调用 `BitBlast` 还是一个典型的 Copy 函数
+
+```cpp
+enum CopyAlgoSelector { Conservative, Fast };
+
+// Conservative routine-works for any type
+template <typename InIt, typename OutIt>
+OutIt CopyImpl(InIt first, InIt last, OutIt result,
+   Int2Type<Conservative>)
+{
+    for (; first != last; ++first, ++result) 
+        *result = *first;
+       return result;
+}
+// Fast routine-works only for pointers to raw data template <typename InIt, typename OutIt>
+OutIt CopyImpl(InIt first, InIt last, OutIt result,
+   Int2Type<Fast>)
+{
+    const size_t n = last-first;
+    BitBlast(first, result, n * sizeof(*first)); 
+    return result + n;
+}
+template <typename InIt, typename OutIt>
+OutIt Copy(InIt first, InIt last, OutIt result) {
+    typedef TypeTraits<InIt>::PointeeType SrcPointee; 
+    typedef TypeTraits<OutIt>::PointeeType DestPointee; 
+    enum { copyAlgo =
+        TypeTraits<InIt>::isPointer && 
+        TypeTraits<OutIt>::isPointer && 
+        TypeTraits<SrcPointee>::isStdFundamental && 
+        TypeTraits<DestPointee>::isStdFundamental && 
+        sizeof(SrcPointee) == sizeof(DestPointee) ? Fast :
+                Conservative };
+    return CopyImpl(first, last, result, Int2Type<copyAlgo>);
+}
+```
+
+虽然 Copy 本身没做多少事，有趣的是函数内部的部分，枚举值 `copyAlgo` 用来选择哪一种实现。
 
 ## Reference
 
