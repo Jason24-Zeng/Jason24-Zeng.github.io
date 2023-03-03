@@ -330,6 +330,8 @@
           
           <category> Dev Tools </category>
           
+          <category> Debug </category>
+          
           <category> GDB </category>
           
       </categories>
@@ -337,7 +339,9 @@
       
         <tags>
             
-            <tag> debug </tag>
+            <tag> GDB </tag>
+            
+            <tag> Debug </tag>
             
         </tags>
       
