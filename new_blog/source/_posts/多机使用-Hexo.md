@@ -1,12 +1,11 @@
 ---
 title: 多机使用 Hexo
 date: 2022-02-04 13:42:25
-tags:
+tags: 
 - Hexo
+categories: 
+- Others
 - Blog
-cateogories:
-- Hexo
-categories: Hexo
 copyright_author: "Jason Zeng"
 cover: /img/hexo.png
 top_img: /img/hexo.png

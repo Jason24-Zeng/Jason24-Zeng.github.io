@@ -6,6 +6,7 @@ tags:
 - Apache
 - Kibana
 categories:
+- Dev Tools
 - ElasticSearch
 cover: /img/ElasticSearch/elastic_search_top.png
 top_img: /img/ElasticSearch-VI/kibana_cover.png

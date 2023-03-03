@@ -2,11 +2,15 @@
 title: CMake-Into-II
 date: 2022-08-07 13:23:16
 tags:
-- shell
-- cmake
+- Shell
+- CMake
 categories:
-- 程序员基础
+- Coding Language
+- C++
 password: 0418
+top_img: /img/C-usable-example/C.png
+cover: /img/C-usable-example/C.png
+
 ---
 
 ## 执行编译指令 shell 脚本

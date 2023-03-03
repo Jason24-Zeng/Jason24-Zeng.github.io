@@ -5,7 +5,10 @@ tags:
 - STL
 - C++
 categories:
+- Coding Language
 - C++
+top_img: /img/C-usable-example/C.png
+cover: /img/C-usable-example/C.png
 ---
 
 ## 前言

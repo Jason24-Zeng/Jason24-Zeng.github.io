@@ -4,7 +4,9 @@ date: 2022-03-15 23:42:48
 tags: 
 - C++
 - HandBook
+- Coding Technique
 categories:
+- Coding Language
 - C++
 password: 0418
 top_img: /img/C-usable-example/C.png

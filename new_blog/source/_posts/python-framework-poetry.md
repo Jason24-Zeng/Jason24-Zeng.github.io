@@ -5,8 +5,8 @@ tags:
 - Poetry
 - Project Management
 categories:
+- Coding Language
 - Python
-- FrameWork
 cover: /img/python_poetry.webp
 top_img: /img/python_poetry.webp
 ---

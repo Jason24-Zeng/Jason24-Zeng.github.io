@@ -2,11 +2,11 @@
 title: git 多用户配置
 date: 2022-03-02 21:46:20
 tags:
-- git
+- Git
 - Devops
 category:
-- cmd line tools
-- git
+- Dev Tools
+- Version Control System
 cover: /img/git-多人开发-与-分支管理/git-flow.webp
 top_img: /img/git-多人开发-与-分支管理/git-flow.webp
 ---

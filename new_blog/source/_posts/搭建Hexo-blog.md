@@ -5,8 +5,9 @@ date: 2022-01-14 18:14:26 +0800
 comments: true
 tags: 
 - Hexo
+categories: 
+- Others
 - Blog
-categories: Hexo
 copyright_author: "Jason Zeng"
 cover: /img/hexo.png
 top_img: /img/hexo.png

@@ -6,6 +6,7 @@ tags:
 - Apache
 - Ik 分词器
 categories:
+- Dev Tools
 - ElasticSearch
 cover: /img/ElasticSearch/elastic_search_top.png
 top_img: /img/ElasticSearch/elastic_search_top.png

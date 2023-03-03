@@ -2,11 +2,11 @@
 title: git 多人开发 与 分支管理
 date: 2022-02-27 11:09:29
 tags: 
-- git
+- Git
 - Devops
 category:
-- cmd line tools
-- git
+- Dev Tools
+- Version Control System
 cover: /img/git-多人开发-与-分支管理/git-flow.webp
 top_img: /img/git-多人开发-与-分支管理/git-flow.webp
 ---

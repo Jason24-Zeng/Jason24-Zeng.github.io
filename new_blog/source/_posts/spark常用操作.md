@@ -5,18 +5,15 @@ tags:
 - spark
 - pyspark
 categories:
-- spark
+- DA Tools
+- SQL
 ---
-
-
 
 ## 前言
 
 最近一周主要在做一些数据构造的工作，主要原因是大维度 embedding 的引入，造成了测试集构造数据处理流程的文件 load 量与内存占用爆发式增加，导致本地数据处理几乎不可能完成。在当前数据中，对每一个 keyword 与 video_id 对，我们需要新添加 5 个 256 维的 emb，每一行的数据几乎膨胀了 20 倍，导致在本地 join 成为 mission impossible。为了实现这样的工作，我们希冀于借助集群分布式处理的方式，使表间 join 成为可能，同时得益于内存处理，加速整个流程。
 
 在整个过程中，也从 0 到 1 得学习了一下 pyspark 的基础知识（此文不赘述）。这篇博客主要关注的方向是平时在使用 pyspark 时常碰到的问题，以及一些解决/优化方法。
-
-
 
 ## spark-shell 操作
 
@@ -40,15 +37,15 @@ export HADOOP_USER_RPCPASSWORD=xxx
 
 
 pyspark \
-	--master yarn \
-	--num-executors 200 \
-	--driver-memory 10G \
-	--driver-cores 2 \
-	--executor-memory 8G \
-	--executor-cores 4 \
-	--name "xxx.xxx-spark-x" \
+    --master yarn \
+    --num-executors 200 \
+    --driver-memory 10G \
+    --driver-cores 2 \
+    --executor-memory 8G \
+    --executor-cores 4 \
+    --name "xxx.xxx-spark-x" \
     --queue ci-search \
-	--conf spark.speculation=true \
+    --conf spark.speculation=true \
 ```
 
 参数设置含义
@@ -121,8 +118,6 @@ SparkSession available as 'spark'.
 
 后面我们就可以像执行 python 一样执行 pyspark 了。
 
-
-
 ## spark-submit 执行 spark 脚本
 
 ```python
@@ -151,8 +146,6 @@ df = spark.read.format("csv")
 # or
 df = spark.read.format("org.apache.spark.sql.csv")
                   .load(filename)
-
-
 ```
 
 #### Extension 1.  读取多个文件

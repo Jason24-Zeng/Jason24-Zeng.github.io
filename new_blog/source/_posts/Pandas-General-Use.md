@@ -4,18 +4,17 @@ date: 2022-04-19 22:37:27
 tags: 
 - Python
 - Pandas
+- DataFrame
 categories:
+- Coding Language
 - Python
-- Pandas
+cover: /img/python_tag.png
+top_img: /img/python_tag.png
 ---
-
-
 
 ## 简介
 
 日常生活中，我们经常会面临表格数据的处理，而 pandas 是一个封装较好的 API，我们经常可以借助于 pandas 更方便得处理数据。这片文章就简单记录一下工作中常使用的 pandas 语句
-
-
 
 ## IO 输入输出
 
@@ -31,8 +30,6 @@ pd.read_csv(filename, sep = '\t')
 ```python
 pd.to_csv(filename, sep = '\t', index = False, header = False)
 ```
-
-
 
 ## 选取
 
@@ -57,8 +54,6 @@ for name, group in data_group:
 print(data_group.groups.keys())
 # 根据 feat_1 的值拿出其中一个 group 的 data_frame
 data_group.get_group(feat_1_val)
-
-     
 ```
 
 ### 笛卡尔积式 Cross Join
@@ -78,11 +73,7 @@ data_frame_cross = pd.concat([data_frame_cross, pd.merge(df_label_2, df_label_3,
 data_frame_cross = pd.concat([data_frame_cross, pd.merge(df_label_1, df_label_3, how = 'cross')])
 # 重新排序
 data_frame_cross.index = range(data_frame_cross.shape[0])
-
-
 ```
-
-
 
 ### 某一列的所有取值
 
@@ -91,13 +82,9 @@ data_frame_cross.index = range(data_frame_cross.shape[0])
 pd.Series([2, 1, 3, 3], name='A').unique()
 ```
 
-
-
 ### 根据 bin 分桶
 
 `pd.cut` 注意参数 `bins`，`right`, `labels`
-
-
 
 ### 对 groupby 的 dataframe 重新设置 index
 

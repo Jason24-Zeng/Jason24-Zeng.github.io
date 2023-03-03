@@ -5,8 +5,12 @@ tags:
 - C++
 - CMake
 categories:
-- Build
+- Coding Language
+- C++
 password: 41831
+top_img: /img/C-usable-example/C.png
+cover: /img/C-usable-example/C.png
+
 ---
 
 ## 前言
@@ -389,8 +393,6 @@ brew install openssl
 echo 'export PATH="/usr/local/opt/openssl/bin:$PATH"' >> ~/.bash_profile
 source ~/.bash_profile
 ```
-
-
 
 ## Reference
 

@@ -2,11 +2,11 @@
 title: command line 高级语法
 date: 2022-02-19 17:54:34
 tags: 
-- vim
-- cmd
+- VIM
+- Command Line Tools
 categories:
-- cmd line tools
-- vim
+- Dev Tools
+- Text Editor
 cover: /img/command-line/1200px-Vimlogo.svg.png
 top_img: /img/command-line/1200px-Vimlogo.svg.png
 ---

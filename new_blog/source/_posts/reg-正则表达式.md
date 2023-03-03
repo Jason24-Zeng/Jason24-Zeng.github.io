@@ -6,7 +6,8 @@ tags:
 - Regular Expression
 - 正则表达式
 categories:
-- 正则表达式
+- Dev Tools
+- Technique
 password: 0418
 cover: /img/reg-正则表达式/zpek00ubevoxvn458b01.webp
 top_img: /img/reg-正则表达式/zpek00ubevoxvn458b01.webp

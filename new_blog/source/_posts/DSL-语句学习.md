@@ -5,7 +5,9 @@ tags:
 - ElasticSearch
 - DSL
 categories:
-- ElasticSearch
+- Coding Language
+- C++
+passwd: 0418
 cover: /img/ElasticSearch/elastic_search_top.png
 top_img: /img/ElasticSearch/elastic_search_top.png
 ---

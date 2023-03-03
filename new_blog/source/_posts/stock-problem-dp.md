@@ -5,7 +5,7 @@ tags:
 - Leetcode 
 - DP
 categories: 
-- Leetcode
+- Algorithm
 - Dynamic Program
 cover: /img/stock-problem-dp/stock_problem.jpeg
 top_img: /img/stock-problem-dp/stock_problem.jpeg

@@ -2,9 +2,10 @@
 title: Golang-Intro (I)
 date: 2022-01-28 18:52:16
 tags: 
-- golang
+- Golang
 categories:
-- golang
+- Coding Language
+- Golang
 password: 41831
 message: 需要密码辅助查验
 cover: /img/Golang-Intro-I/golang_top.png

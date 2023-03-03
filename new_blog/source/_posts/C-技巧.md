@@ -8,8 +8,8 @@ categories:
 - Coding Language
 - C++
 passwd: 12346
-cover: /img/SearchEnginee/searchplatform.png
-top_img: /img/SearchEnginee/searchplatform.png
+top_img: /img/C-usable-example/C.png
+cover: /img/C-usable-example/C.png
 ---
 
 ## C++ 技巧
@@ -878,7 +878,44 @@ OutIt Copy(InIt first, InIt last, OutIt result) {
 }
 ```
 
-虽然 Copy 本身没做多少事，有趣的是函数内部的部分，枚举值 `copyAlgo` 用来选择哪一种实现。
+虽然 Copy 本身没做多少事，有趣的是函数内部的部分，枚举值 `copyAlgo` 用来选择哪一种实现。逻辑如下：如果两个迭代器是指针，如果两个指向的类型都是基础的，或者如果两个指向的类型 size 相同，那么我们可以使用 `BitBlast` 。最后一种情况是一种有趣的变形，如果我们这么做：
+
+```cpp
+int* p1 = ...;
+int* p2 = ...;
+unsigned int* p3 = ...;
+Copy(p1, p2, p3);
+```
+
+这时 Copy  会也应该调用快速版本，即使源类型和目标类型不同。
+
+`Copy` 的缺点是它没法加速所有可以加速的东西。比如，我们可能有一个 C 结构，它内部只包含了基本类型数据，即所谓的 *plain old data* ，或者 POD 结构。C++ 标准允许 POD 结构的按位拷贝，但是 Copy 函数不能检测它是 POD，所以它会使用运行慢的版本。这里我们不但需要依赖 `TypeTraits`，也需要依赖一些传统的 traits。比如：
+
+```cpp
+template <typename T> struct SupportsBitwiseCopy {
+    enum { result = TypeTraits<T>::isStdFundamental }; 
+};
+template <typename InIt, typename OutIt>
+OutIt Copy(InIt first, InIt last, OutIt result,
+   Int2Type<true>){
+    typedef TypeTraits<InIt>::PointeeType SrcPointee; 
+    typedef TypeTraits<OutIt>::PointeeType DestPointee; 
+    enum { useBitBlast =
+        TypeTraits<InIt>::isPointer && 
+        TypeTraits<OutIt>::isPointer && 
+        SupportsBitwiseCopy<SrcPointee>::result && 
+        SupportsBitwiseCopy<DestPointee>::result && 
+        sizeof(SrcPointee) == sizeof(DestPointee) };
+    return CopyImpl(first, last, Int2Type<useBitBlast>); }
+```
+
+现在，想要接触 POD 类型无法使用 `BitBlast` 的束缚，我们只需要特化 `SupportBitwiseCopy` 并放进去一个 `true`;
+
+```cpp
+template<> struct SupportsBitwiseCopy<MyType> {
+  enum { result = true };
+}；
+```
 
 ## Reference
 

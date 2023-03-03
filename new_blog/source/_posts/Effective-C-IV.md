@@ -6,7 +6,7 @@ tags:
 - Design & Declarations
 - 书籍笔记
 categories:
-- coding
+- Coding Language
 - C++
 cover: /img/Effective-C-II/effective_cplusplus_top.jpeg
 top_img: /img/Effective-C-II/effective_cplusplus_top.jpeg

@@ -6,7 +6,7 @@ tags:
 - Sort
 - Heap
 categories: 
-- Leetcode
+- Algorithm
 - Sort
 cover: /img/HeapSort/heap_top.png
 top_img: /img/HeapSort/heap_top.png

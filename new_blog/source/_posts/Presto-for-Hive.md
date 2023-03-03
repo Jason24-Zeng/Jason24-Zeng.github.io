@@ -4,8 +4,10 @@ date: 2022-02-28 15:49:36
 tags: 
 - Presto
 - Hive
+- HDFS
 categories:
-- Presto
+- DA Tools
+- SQL
 cover: /img/Presto-for-Hive/Presto-logo.jpeg
 top_img: /img/Docker-Intro-I/Presto-logo.jpeg
 ---

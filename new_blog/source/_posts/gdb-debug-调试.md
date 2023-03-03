@@ -2,10 +2,12 @@
 title: gdb debug 调试
 date: 2022-03-19 17:04:15
 tags:
-- gdb
-- debug
+- GDB
+- Debug
 category:
-- debug tools
+- Dev Tools
+- Debug
+- GDB
 password: 0418
 cover: /img/gdb-debug-调试/gdb.jpeg
 top_img: /img/gdb-debug-调试/gdb.jpeg

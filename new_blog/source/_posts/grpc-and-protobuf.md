@@ -4,7 +4,9 @@ date: 2022-01-26 22:02:38
 tags:
 - gRPC
 - ProtoBuf
-categories: gRPC
+categories: 
+- Dev Tools
+- RPC
 cover: /img/grpc-and-protobuf/protocol-buffers.png
 top_img: /img/grpc-and-protobuf/protocol-buffers.png
 ---

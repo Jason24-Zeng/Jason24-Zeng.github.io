@@ -2,9 +2,12 @@
 title: Self Introduction
 date: 2022-01-15 10:57:43
 tags: 
+- Self-Introduction
 - Resume
 password: 0831
-categories: Resume
+categories: 
+- Others
+- Resume
 comments: true
 cover: /img/self_introduction.jpeg
 top_img: /img/avocado.jpeg
