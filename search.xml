@@ -8,7 +8,7 @@
       <link href="/2023/03/05/Python-Project-Management-poetry-III/"/>
       <url>/2023/03/05/Python-Project-Management-poetry-III/</url>
       
-        <content type="html"><![CDATA[<h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2>]]></content>
+        <content type="html"><![CDATA[<h2 id="命令">命令</h2><p>通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 <code>poetry</code> 去查看完整的命令列表，然后对其中任何命令后面加上 <code>--help</code> 就能获得更多有用信息。</p><h3 id="全局选项">全局选项</h3><ul><li><p><code>--verbose(-v|vv|vvv)</code> 增加消息的详细程度，“-v” 为正常输出，“-vv” 为更详细得输出，“-vvv” 则是用于 debug</p></li><li><p><code>--help(-h)</code> 显式帮助信息</p></li><li><p><code>--quiet(-q)</code> 不输出任何信息</p></li><li><p><code>--ansi</code> 强制 ANSI 输出</p></li><li><p><code>--no-ansi</code> 禁用 ANSI 输出</p></li><li><p><code>--version(-V)</code> 显式应用版本</p></li><li><p><code>--no-interaction(-n)</code> 不询问任何交互问题</p></li><li><p><code>--no-plugins</code> 禁用 plugins</p></li><li><p><code>--no-cache</code> 禁用 Poetry 源 cache</p></li><li><p><code>--directory=DIRECTORY(-C)</code> Poetry 指令的工作目录，默认为当前工作目录</p></li></ul><h3 id="new">new</h3>]]></content>
       
       
       <categories>
