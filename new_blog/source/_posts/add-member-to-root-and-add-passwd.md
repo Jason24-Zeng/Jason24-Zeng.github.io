@@ -4,6 +4,12 @@ date: 2022-08-05 14:37:32
 tags: 
 - Service
 - Handbook
+Categories:
+- Dev Tools
+- Dev Machine
+passwd: 0418
+cover: /img/dev_machine.jpeg
+top_img: /img/dev_machine.jpeg
 ---
 
 1. 登陆机器，进入 root

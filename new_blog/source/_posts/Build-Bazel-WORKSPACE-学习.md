@@ -8,7 +8,7 @@ categories:
 - Coding Language
 - C++
 top_img: /img/bazel_tag.png
-cover: /img/C.png
+cover: /img/C-usable-example/C.png
 ---
 
 ## 场景 I

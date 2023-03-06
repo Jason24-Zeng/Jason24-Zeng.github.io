@@ -5,7 +5,7 @@ tags:
 - Docker
 categories:
 - Dev Tools
-- Docker
+- Dev Machine
 cover: /img/Docker-Intro-I/docker-top.png
 top_img: /img/Docker-Intro-I/docker-top.png
 ---
