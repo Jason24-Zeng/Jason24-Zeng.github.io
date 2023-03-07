@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python Project Management - poetry (III) | Jason &amp; Anita's Blog</title><meta name="keywords" content="Poetry,Project Management,Commands"><meta name="author" content="Jason Zeng, Anita Xiong"><meta name="copyright" content="Jason Zeng, Anita Xiong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="命令通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 poetry 去查看完整的命令列表，然后对其中任何命令后面加上 --help 就能获得更多有用信息。 全局选项 --verbose(-v|vv|vvv) 增加消息的详细程度，”-v” 为正常输出，”-vv” 为更详细得输出，”-vvv” 则是用于 debug  --">
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python Project Management - poetry (III) | Jason &amp; Anita's Blog</title><meta name="keywords" content="Poetry,Project Management,Commands"><meta name="author" content="Jason Zeng, Anita Xiong"><meta name="copyright" content="Jason Zeng, Anita Xiong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="命令 通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 poetry 去查看完整的命令列表，然后对其中任何命令后面加上 --help 就能获得更多有用信息。 全局选项   --verbose(-v|vv|vvv) 增加消息的详细程度，“-v” 为正常输出，“-vv” 为更详细得输出，“-vvv” 则是用于 debug">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python Project Management - poetry (III)">
 <meta property="og:url" content="https://jason24-zeng.github.io/2023/03/05/Python-Project-Management-poetry-III/index.html">
 <meta property="og:site_name" content="Jason &amp; Anita&#39;s Blog">
-<meta property="og:description" content="命令通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 poetry 去查看完整的命令列表，然后对其中任何命令后面加上 --help 就能获得更多有用信息。 全局选项 --verbose(-v|vv|vvv) 增加消息的详细程度，”-v” 为正常输出，”-vv” 为更详细得输出，”-vvv” 则是用于 debug  --">
+<meta property="og:description" content="命令 通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 poetry 去查看完整的命令列表，然后对其中任何命令后面加上 --help 就能获得更多有用信息。 全局选项   --verbose(-v|vv|vvv) 增加消息的详细程度，“-v” 为正常输出，“-vv” 为更详细得输出，“-vvv” 则是用于 debug">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://jason24-zeng.github.io/img/python_poetry.webp">
 <meta property="article:published_time" content="2023-03-05T14:20:44.000Z">
-<meta property="article:modified_time" content="2023-03-06T15:04:51.777Z">
+<meta property="article:modified_time" content="2023-03-07T15:23:06.520Z">
 <meta property="article:author" content="Jason Zeng, Anita Xiong">
 <meta property="article:tag" content="Poetry">
 <meta property="article:tag" content="Project Management">
@@ -60,7 +60,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2023-03-06 23:04:51'
+  postUpdate: '2023-03-07 23:23:06'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -153,36 +153,49 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/kobe.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">64</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa-fw fa fa-book"></i><span> Find</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/python_poetry.webp')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jason &amp; Anita's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa-fw fa fa-book"></i><span> Find</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python Project Management - poetry (III)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-03-05T14:20:44.000Z" title="Created 2023-03-05 22:20:44">2023-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-03-06T15:04:51.777Z" title="Updated 2023-03-06 23:04:51">2023-03-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Coding-Language/">Coding Language</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Coding-Language/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>5min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python Project Management - poetry (III)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h2><p>通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 <code>poetry</code> 去查看完整的命令列表，然后对其中任何命令后面加上 <code>--help</code> 就能获得更多有用信息。</p>
-<h3 id="全局选项"><a href="#全局选项" class="headerlink" title="全局选项"></a>全局选项</h3><ul>
-<li><p><code>--verbose(-v|vv|vvv)</code> 增加消息的详细程度，”-v” 为正常输出，”-vv” 为更详细得输出，”-vvv” 则是用于 debug</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/kobe.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">64</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa-fw fa fa-book"></i><span> Find</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/python_poetry.webp')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jason &amp; Anita's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa-fw fa fa-book"></i><span> Find</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python Project Management - poetry (III)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-03-05T14:20:44.000Z" title="Created 2023-03-05 22:20:44">2023-03-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-03-07T15:23:06.520Z" title="Updated 2023-03-07 23:23:06">2023-03-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Coding-Language/">Coding Language</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Coding-Language/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>11min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python Project Management - poetry (III)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="命令">命令</h2>
+<p>通过前两篇文章，我们已经学会使用命令行接口做一些事了，而这一章则囊括了所有的相关命令。如果想要从命令行中得到帮助，可以简单的调用 <code>poetry</code> 去查看完整的命令列表，然后对其中任何命令后面加上 <code>--help</code> 就能获得更多有用信息。</p>
+<h3 id="全局选项">全局选项</h3>
+<ul>
+<li>
+<p><code>--verbose(-v|vv|vvv)</code> 增加消息的详细程度，“-v” 为正常输出，“-vv” 为更详细得输出，“-vvv” 则是用于 debug</p>
 </li>
-<li><p><code>--help(-h)</code> 显式帮助信息</p>
+<li>
+<p><code>--help(-h)</code> 显式帮助信息</p>
 </li>
-<li><p><code>--quiet(-q)</code> 不输出任何信息</p>
+<li>
+<p><code>--quiet(-q)</code> 不输出任何信息</p>
 </li>
-<li><p><code>--ansi</code> 强制 ANSI 输出</p>
+<li>
+<p><code>--ansi</code> 强制 ANSI 输出</p>
 </li>
-<li><p><code>--no-ansi</code> 禁用 ANSI 输出</p>
+<li>
+<p><code>--no-ansi</code> 禁用 ANSI 输出</p>
 </li>
-<li><p><code>--version(-V)</code> 显式应用版本</p>
+<li>
+<p><code>--version(-V)</code> 显式应用版本</p>
 </li>
-<li><p><code>--no-interaction(-n)</code> 不询问任何交互问题</p>
+<li>
+<p><code>--no-interaction(-n)</code> 不询问任何交互问题</p>
 </li>
-<li><p><code>--no-plugins</code> 禁用 plugins</p>
+<li>
+<p><code>--no-plugins</code> 禁用 plugins</p>
 </li>
-<li><p><code>--no-cache</code> 禁用 Poetry 源 cache</p>
+<li>
+<p><code>--no-cache</code> 禁用 Poetry 源 cache</p>
 </li>
-<li><p><code>--directory=DIRECTORY(-C)</code> Poetry 指令的工作目录，默认为当前工作目录</p>
+<li>
+<p><code>--directory=DIRECTORY(-C)</code> Poetry 指令的工作目录，默认为当前工作目录</p>
 </li>
 </ul>
-<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><p>这个指令会帮我们启动一个新的 Python 项目，并创建一个适合大部分项目的目录结构</p>
+<h3 id="new">new</h3>
+<p>这个指令会帮我们启动一个新的 Python 项目，并创建一个适合大部分项目的目录结构</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry new my-package</span><br></pre></td></tr></table></figure>
 <p>创建的结构如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">my-package</span><br><span class="line">├── pyproject.toml</span><br><span class="line">├── README.md</span><br><span class="line">├── my_package</span><br><span class="line">│   └── __init__.py</span><br><span class="line">└── tests</span><br><span class="line">    └── __init__.py</span><br></pre></td></tr></table></figure>
 <p>如果我们想要将我们的项目命名成一个区别与主目录的名字，我们可以加上 <code>--name</code> 选项</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry new my-folder --name my-package</span><br></pre></td></tr></table></figure>
-<p>如果我们想要有一个 src 目录，可以使用 <code>--src</code> 选项 </p>
+<p>如果我们想要有一个 src 目录，可以使用 <code>--src</code> 选项</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry new --src my-package</span><br></pre></td></tr></table></figure>
 <p>这个指令会创建一下的目录结构</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">my-package</span><br><span class="line">├── pyproject.toml</span><br><span class="line">├── README.md</span><br><span class="line">├── src</span><br><span class="line">│   └── my_package</span><br><span class="line">│       └── __init__.py</span><br><span class="line">└── tests</span><br><span class="line">    └── __init__.py</span><br></pre></td></tr></table></figure>
@@ -190,32 +203,45 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry new --src --name my.package my-package</span><br></pre></td></tr></table></figure>
 <p>它会创建如下结构：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">my-package</span><br><span class="line">├── pyproject.toml</span><br><span class="line">├── README.md</span><br><span class="line">├── src</span><br><span class="line">│   └── my</span><br><span class="line">│       └── package</span><br><span class="line">│           └── __init__.py</span><br><span class="line">└── tests</span><br><span class="line">    └── __init__.py</span><br></pre></td></tr></table></figure>
-<h4 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h4><ul>
-<li><p><code>--name</code>: 设定最终 package 的名字</p>
+<h4 id="选项">选项</h4>
+<ul>
+<li>
+<p><code>--name</code>: 设定最终 package 的名字</p>
 </li>
-<li><p><code>--src</code>：使用项目的 src 布局</p>
+<li>
+<p><code>--src</code>：使用项目的 src 布局</p>
 </li>
-<li><p><code>--readme</code>：指定 readme 文件扩展，默认是 <code>md</code>，如果我们想要发布到 PyPI，需要牢记 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://packaging.python.org/en/latest/guides/making-a-pypi-friendly-readme/">写一个 PyPI 友好 README 的推荐</a></p>
+<li>
+<p><code>--readme</code>：指定 readme 文件扩展，默认是 <code>md</code>，如果我们想要发布到 PyPI，需要牢记 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://packaging.python.org/en/latest/guides/making-a-pypi-friendly-readme/">写一个 PyPI 友好 README 的推荐</a></p>
 </li>
 </ul>
-<h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><p>这个命令帮我们交互式得创建一个 <code>pyproject.toml</code> 文件，我们需要的是提供一些关于我们套件的基本信息。</p>
+<h3 id="init">init</h3>
+<p>这个命令帮我们交互式得创建一个 <code>pyproject.toml</code> 文件，我们需要的是提供一些关于我们套件的基本信息。</p>
 <p>它会交互式得要求我们填写一些信息，同时使用一些只能的默认值</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry init</span><br></pre></td></tr></table></figure>
-<h4 id="选项-1"><a href="#选项-1" class="headerlink" title="选项"></a>选项</h4><ul>
-<li><p><code>--name</code>：package 的名字</p>
+<h4 id="选项-2">选项</h4>
+<ul>
+<li>
+<p><code>--name</code>：package 的名字</p>
 </li>
-<li><p><code>--description</code>：package的描述</p>
+<li>
+<p><code>--description</code>：package的描述</p>
 </li>
-<li><p><code>--author</code>：package的作者</p>
+<li>
+<p><code>--author</code>：package的作者</p>
 </li>
-<li><p><code>--python</code>: 可兼容的 Python 版本</p>
+<li>
+<p><code>--python</code>: 可兼容的 Python 版本</p>
 </li>
-<li><p><code>--dependency</code>：要求的一些依赖库，同时需要版本约束。格式如 <code>foo:1.0.0</code></p>
+<li>
+<p><code>--dependency</code>：要求的一些依赖库，同时需要版本约束。格式如 <code>foo:1.0.0</code></p>
 </li>
-<li><p><code>--dev-dependency</code>：开发要求的一些依赖库。</p>
+<li>
+<p><code>--dev-dependency</code>：开发要求的一些依赖库。</p>
 </li>
 </ul>
-<h3 id="install"><a href="#install" class="headerlink" title="install"></a>install</h3><p><code>install</code> 指令会读取 当前项目的<code>pyproject.toml</code> 文件，解析出依赖项，并且安装它们。</p>
+<h3 id="install">install</h3>
+<p><code>install</code> 指令会读取 当前项目的<code>pyproject.toml</code> 文件，解析出依赖项，并且安装它们。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry install</span><br></pre></td></tr></table></figure>
 <p>如果有一个 <code>poetry.lock</code> 文件在当前目录中，它会使用 <code>poetry.lock</code> 文件中使用的完全相同的版本依赖，而不是解析它们。这确保了每个使用该库的人都能获得完全相同版本的抵赖。</p>
 <p>如果没有一个 <code>poetry.lock</code> 文件，Poetry 会在依赖解析后创建一个。</p>
@@ -229,7 +255,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry install --only-root</span><br></pre></td></tr></table></figure>
 <p>如果我们想要同步环境，并且确保它匹配锁文件，我们可以使用 <code>--sync</code> 选项</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry install --sync</span><br></pre></td></tr></table></figure>
-<p><code>--sync</code> 选项能合与依赖组有关的选项一起使用 </p>
+<p><code>--sync</code> 选项能合与依赖组有关的选项一起使用</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">poetry install --without dev --sync</span><br><span class="line">poetry install --with docs --sync</span><br><span class="line">poetry install --only dev</span><br></pre></td></tr></table></figure>
 <p>我们还可以指定我们想要安装的 extras，这时我们需要传递 <code>-E|--extras</code> 选项。而传递 <code>--all-extras</code> 会安装项目中所有定义好的 extras</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">poetry install --extras &quot;mysql pgsql&quot;</span><br><span class="line">poetry install -E mysql -E pgsql</span><br><span class="line">poetry install --all-extras</span><br></pre></td></tr></table></figure>
@@ -241,48 +267,238 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry install --no-root</span><br></pre></td></tr></table></figure>
 <p>默认情况下，安装阶段 <code>poetry</code> 不会编译 Python 源文件成字节码。这会加速安装过程，但是首次执行会有一点耗时，因为那时候 Python 会自动编译源代码成字节码。如果想要在安装阶段就做这样的编译操作，可以使用<code>--compile</code> 选项</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry install --compile</span><br></pre></td></tr></table></figure>
-<h4 id="选项-2"><a href="#选项-2" class="headerlink" title="选项"></a>选项</h4><ul>
-<li><p><code>--without</code> ：将要忽略的依赖组</p>
+<h4 id="选项-3">选项</h4>
+<ul>
+<li>
+<p><code>--without</code> ：将要忽略的依赖组</p>
 </li>
-<li><p><code>--with</code>：将要包含的可选依赖组</p>
+<li>
+<p><code>--with</code>：将要包含的可选依赖组</p>
 </li>
-<li><p><code>--only</code>：将只包含的依赖组</p>
+<li>
+<p><code>--only</code>：将只包含的依赖组</p>
 </li>
-<li><p><code>--only-root</code> ：只安装根项目，不包含所有的依赖</p>
+<li>
+<p><code>--only-root</code> ：只安装根项目，不包含所有的依赖</p>
 </li>
-<li><p><code>--sync</code> ：同步环境中锁定的 package 和 指定的组</p>
+<li>
+<p><code>--sync</code> ：同步环境中锁定的 package 和 指定的组</p>
 </li>
-<li><p><code>--no-root</code>：不安装根 package，即我们的项目</p>
+<li>
+<p><code>--no-root</code>：不安装根 package，即我们的项目</p>
 </li>
-<li><p><code>--dry-run</code>：输出操作，但不执行任何操作</p>
+<li>
+<p><code>--dry-run</code>：输出操作，但不执行任何操作</p>
 </li>
-<li><p><code>--extras(-E)</code>：安装的特征，允许多值。</p>
+<li>
+<p><code>--extras(-E)</code>：安装的特征，允许多值。</p>
 </li>
-<li><p><code>--all-extras</code>：安装所有的 extra 特征，与 <code>--extras</code> 冲突</p>
+<li>
+<p><code>--all-extras</code>：安装所有的 extra 特征，与 <code>--extras</code> 冲突</p>
 </li>
-<li><p><code>--compile</code>：编译 Python 源代码成字节码</p>
+<li>
+<p><code>--compile</code>：编译 Python 源代码成字节码</p>
 </li>
 </ul>
 <p>需要注意，当指定了 <code>--only</code> 时，<code>--with</code> 和 <code>--without</code> 选项都会被忽略。</p>
-<h3 id="update"><a href="#update" class="headerlink" title="update"></a>update</h3><p>为了得到最新版本的依赖，并且更新 <code>poetry.lock</code> 文件，我们可以使用 <code>update</code> 指令</p>
+<h3 id="update">update</h3>
+<p>为了得到最新版本的依赖，并且更新 <code>poetry.lock</code> 文件，我们可以使用 <code>update</code> 指令</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry update</span><br></pre></td></tr></table></figure>
 <p>该指令会解析项目的所有依赖，并且往 <code>poetry.lock</code> 文件写入真实版本</p>
 <p>如果我们指向更新一些 package，而不是所有的，我们可以执行如下操作</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry update requests toml</span><br></pre></td></tr></table></figure>
 <p>不过需要注意：这里的更新不会超过 <code>pyproject.toml</code>文件内指定的版本限制。也就是说， 举个例子如<code>poetry update foo</code> ，如果 <code>foo</code> 被要求是 <code>~2.3</code> 后者 <code>2.3</code>，而此时有版本 <code>2.4</code> ， <code>foo</code> 并不会被更新。想要更新 <code>foo</code>，我们必须先更新限制，比如更新成 <code>^2.3</code>。想要更新限制，可以使用 add 指令。</p>
-<h4 id="选项-3"><a href="#选项-3" class="headerlink" title="选项"></a>选项</h4><ul>
-<li><p><code>--without</code> ：要忽略的依赖组</p>
+<h4 id="选项-4">选项</h4>
+<ul>
+<li>
+<p><code>--without</code> ：要忽略的依赖组</p>
 </li>
-<li><p><code>--with</code>：要包含的可选依赖组</p>
+<li>
+<p><code>--with</code>：要包含的可选依赖组</p>
 </li>
-<li><p><code>--only</code>：只包含的依赖组</p>
+<li>
+<p><code>--only</code>：只包含的依赖组</p>
 </li>
-<li><p><code>--dry-run</code>：输出操作，但不执行任何操作</p>
+<li>
+<p><code>--dry-run</code>：输出操作，但不执行任何操作</p>
 </li>
-<li><p><code>--lock</code>：不执行安装，只更新锁文件。</p>
+<li>
+<p><code>--lock</code>：不执行安装，只更新锁文件。</p>
 </li>
 </ul>
-<h3 id="add"><a href="#add" class="headerlink" title="add"></a>add</h3></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Jason Zeng, Anita Xiong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jason24-zeng.github.io/2023/03/05/Python-Project-Management-poetry-III/">https://jason24-zeng.github.io/2023/03/05/Python-Project-Management-poetry-III/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Poetry/">Poetry</a><a class="post-meta__tags" href="/tags/Project-Management/">Project Management</a><a class="post-meta__tags" href="/tags/Commands/">Commands</a></div><div class="post_share"><div class="social-share" data-image="/img/python_poetry.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat/微信"/></a><div class="post-qr-code-desc">wechat/微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay/支付宝"/></a><div class="post-qr-code-desc">alipay/支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/03/05/python-poetry-II/"><img class="next-cover" src="/img/python_poetry.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Python Project Management - poetry (II)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/02/23/python-framework-poetry/" title="Python Project Management - poetry (I)"><img class="cover" src="/img/python_poetry.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-23</div><div class="title">Python Project Management - poetry (I)</div></div></a></div><div><a href="/2023/03/05/python-poetry-II/" title="Python Project Management - poetry (II)"><img class="cover" src="/img/python_poetry.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-05</div><div class="title">Python Project Management - poetry (II)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/kobe.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jason Zeng, Anita Xiong</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">64</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jason24-Zeng/" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:z5zeng@eng.ucsd.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/img/wechat_link.jpeg" target="_blank" title="Wechat"><i class="fab fa-weixin"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%80%89%E9%A1%B9"><span class="toc-number">1.1.</span> <span class="toc-text">全局选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#new"><span class="toc-number">1.2.</span> <span class="toc-text">new</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#init"><span class="toc-number">1.3.</span> <span class="toc-text">init</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install"><span class="toc-number">1.4.</span> <span class="toc-text">install</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-2"><span class="toc-number">1.4.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update"><span class="toc-number">1.5.</span> <span class="toc-text">update</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-3"><span class="toc-number">1.5.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#add"><span class="toc-number">1.6.</span> <span class="toc-text">add</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/Python-Project-Management-poetry-III/" title="Python Project Management - poetry (III)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (III)"/></a><div class="content"><a class="title" href="/2023/03/05/Python-Project-Management-poetry-III/" title="Python Project Management - poetry (III)">Python Project Management - poetry (III)</a><time datetime="2023-03-05T14:20:44.000Z" title="Created 2023-03-05 22:20:44">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/python-poetry-II/" title="Python Project Management - poetry (II)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (II)"/></a><div class="content"><a class="title" href="/2023/03/05/python-poetry-II/" title="Python Project Management - poetry (II)">Python Project Management - poetry (II)</a><time datetime="2023-03-05T07:27:17.000Z" title="Created 2023-03-05 15:27:17">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/23/python-framework-poetry/" title="Python Project Management - poetry (I)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (I)"/></a><div class="content"><a class="title" href="/2023/02/23/python-framework-poetry/" title="Python Project Management - poetry (I)">Python Project Management - poetry (I)</a><time datetime="2023-02-23T15:06:55.000Z" title="Created 2023-02-23 23:06:55">2023-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/C-%E6%8A%80%E5%B7%A7/" title="C++ 技巧"><img src="/img/C-usable-example/C.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 技巧"/></a><div class="content"><a class="title" href="/2023/02/04/C-%E6%8A%80%E5%B7%A7/" title="C++ 技巧">C++ 技巧</a><time datetime="2023-02-04T10:00:06.000Z" title="Created 2023-02-04 18:00:06">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/12/Build-Bazel-WORKSPACE-%E5%AD%A6%E4%B9%A0/" title="Bazel WORKSPACE 学习"><img src="/img/C-usable-example/C.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bazel WORKSPACE 学习"/></a><div class="content"><a class="title" href="/2022/09/12/Build-Bazel-WORKSPACE-%E5%AD%A6%E4%B9%A0/" title="Bazel WORKSPACE 学习">Bazel WORKSPACE 学习</a><time datetime="2022-09-12T15:25:39.000Z" title="Created 2022-09-12 23:25:39">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/python_poetry.webp')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Jason Zeng, Anita Xiong</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">follow your heart</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="rightside.chat_btn"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+<h3 id="add">add</h3>
+<p><code>add</code> 指令增加要求的依赖包到 <code>pyproject.toml</code> 文件，并且安装它们。如果我们不指定一个版本限制，Poetry 会在可选依赖包版本里选择一个合适的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add requests pendulum</span><br></pre></td></tr></table></figure>
+<p>我们也可以指定一个限制：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 允许 &gt;=2.0.5, &lt;3.0.0 的版本</span></span><br><span class="line">poetry add pendulum@^2.0.5</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 允许 &gt;2.0.5, &lt;2.1.0 的版本</span></span><br><span class="line">poetry add pendulum@~2.0.5</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 允许 &gt;= 2.0.5 版本，没有上限</span></span><br><span class="line">poetry add &quot;pendulum&gt;=2.0.5&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 只允许 2.0.5 版本</span></span><br><span class="line">poetry add pendulum==2.0.5</span><br></pre></td></tr></table></figure>
+<p>如果我们尝试增加一个已经存在的依赖包，我们会得到一个报错。不过，如果我们制定一个如上的限制，依赖会被更新到指定限制的版本。</p>
+<p>如果我们想要得到已经存在依赖的最新版本，我们可以使用特殊的限制 <code>latest</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add pendulum@latest</span><br></pre></td></tr></table></figure>
+<p>我们也能添加 <code>git</code> 依赖</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add git+https://github.com/sdispater/pendulum.git</span><br></pre></td></tr></table></figure>
+<p>或者用 ssh 取代 https</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">poetry add git+ssh://git@github.com/sdispater/pendulum.git</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> or alternatively:</span></span><br><span class="line">poetry add git+ssh://git@github.com:sdispater/pendulum.git</span><br></pre></td></tr></table></figure>
+<p>如果我们想要切刀特定分支，tag或版本，可以通过使用 add 指定它</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">poetry add git+https://github.com/sdispater/pendulum.git#develop</span><br><span class="line">poetry add git+https://github.com/sdispater/pendulum.git#2.0.5</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> or using SSH instead:</span></span><br><span class="line">poetry add git+ssh://github.com/sdispater/pendulum.git#develop</span><br><span class="line">poetry add git+ssh://github.com/sdispater/pendulum.git#2.0.5</span><br></pre></td></tr></table></figure>
+<p>或者引用一个子目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add git+https://github.com/myorg/mypackage_with_subdirs.git@main#subdirectory=subdir</span><br></pre></td></tr></table></figure>
+<p>另外，你也可以添加一个本地目录或文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">poetry add ./my-package/</span><br><span class="line">poetry add ../my-package/dist/my-package-0.1.0.tar.gz</span><br><span class="line">poetry add ../my-package/dist/my_package-0.1.0.whl</span><br></pre></td></tr></table></figure>
+<p>如果我们想要依赖能在可编辑模式下被安装，我们可以使用 <code>--editable</code> 选项</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">poetry add --editable ./my-package/</span><br><span class="line">poetry add --editable git+ssh://github.com/sdispater/pendulum.git#develop</span><br></pre></td></tr></table></figure>
+<p>可替代的，我们也可以在<code>pyproject.toml</code> 文件中声明它。这意味着在本地目录的改变会直接反映到环境中</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[tool.poetry.dependencies]</span></span><br><span class="line"><span class="attr">my-package</span> = &#123;path = <span class="string">&quot;../my/path&quot;</span>, develop = <span class="literal">true</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>如果我们想要安装的依赖包提供 extras，我们能在添加该依赖包时指定 extras：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">poetry add &quot;requests[security,socks]&quot;</span><br><span class="line">poetry add &quot;requests[security,socks]~=2.22.0&quot;</span><br><span class="line">poetry add &quot;git+https://github.com/pallets/flask.git@1.1.1[dotenv,dev]&quot;</span><br></pre></td></tr></table></figure>
+<p>如果我们想要给一个指定依赖组添加依赖包，我们能使用 <code>--group(-G)</code> 操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry add mkdorc --group docs</span><br></pre></td></tr></table></figure>
+<h4 id="选项-5">选项</h4>
+<ul>
+<li>
+<p><code>--group(-G)</code> 要将依赖包添加到的依赖组名</p>
+</li>
+<li>
+<p><code>--dev(-D)</code> 添加依赖包到开发依赖，目前已经被弃用，使用 <code>-G dev</code> 代替。</p>
+</li>
+<li>
+<p><code>--editable(-e)</code> 增加 vcs 依赖或者路径依赖，并且令这些依赖为可编辑的。</p>
+</li>
+<li>
+<p><code>--extras(-E)</code> 添加的依赖需要激活的 extras，允许多值</p>
+</li>
+<li>
+<p><code>--optional</code> 增加一个可选依赖</p>
+</li>
+<li>
+<p><code>--python</code> 要想使用依赖必须安装的 python 版本</p>
+</li>
+<li>
+<p><code>--platform</code> 依赖必须要安装到的平台</p>
+</li>
+<li>
+<p><code>--source</code> 使用来安装依赖的源名字</p>
+</li>
+<li>
+<p><code>--allow-prereleases</code> 允许提前发布</p>
+</li>
+<li>
+<p><code>--dry-run</code> 输出操作，但不执行任何操作</p>
+</li>
+<li>
+<p><code>--lock</code> 不实现安装，值更新锁文件</p>
+</li>
+</ul>
+<h3 id="remove">remove</h3>
+<p><code>remove</code> 操作会从当前已安装依赖包中移除一个依赖包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry remove pendulum</span><br></pre></td></tr></table></figure>
+<p>如果我们想要为一个指定依赖组移除一个依赖包，我们可以使用 <code>-G</code> 选项</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry remove mkdocs --group docs</span><br></pre></td></tr></table></figure>
+<h4 id="选项-6">选项</h4>
+<ul>
+<li>
+<p><code>--group</code>  移除依赖项的组</p>
+</li>
+<li>
+<p><code>--dev(-D)</code> 从开发依赖移除依赖包</p>
+</li>
+<li>
+<p><code>--dry-run</code> 输出操作，但不执行任何操作</p>
+</li>
+</ul>
+<h3 id="show">show</h3>
+<p>为了列出所有可选依赖包，我们可以使用 <code>show</code> 命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry show</span><br></pre></td></tr></table></figure>
+<p>如果想要看一个指定依赖包的细节，我们能传入依赖包名字</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">poetry show pendulum</span><br><span class="line"></span><br><span class="line">name        : pendulum</span><br><span class="line">version     : 1.4.2</span><br><span class="line">description : Python datetimes made easy</span><br><span class="line"></span><br><span class="line">dependencies</span><br><span class="line"> - python-dateutil &gt;=2.6.1</span><br><span class="line"> - tzlocal &gt;=1.4</span><br><span class="line"> - pytzdata &gt;=2017.2.2</span><br><span class="line"></span><br><span class="line">required by</span><br><span class="line"> - calendar &gt;=1.4.0</span><br></pre></td></tr></table></figure>
+<h4 id="选项-7">选项</h4>
+<ul>
+<li>
+<p><code>--without</code> 要忽略的依赖组</p>
+</li>
+<li>
+<p><code>--why</code> 当站址整个列表，或者对一个单一依赖包使用 <code>-tree</code> 时，展示为什么一个依赖包会被 include。</p>
+</li>
+<li>
+<p><code>--with</code> 要包含的可选依赖组</p>
+</li>
+<li>
+<p><code>--only</code> 要仅包含的依赖组</p>
+</li>
+<li>
+<p><code>--no-dev</code> 不用列出 dev dependencies</p>
+</li>
+<li>
+<p><code>--tree</code> 将依赖按照树状图的格式罗列</p>
+</li>
+<li>
+<p><code>--latest(-l)</code> 展现最近的版本</p>
+</li>
+<li>
+<p><code>--outdated(-o)</code> 展现最新的版本，但进适用于过时的依赖包</p>
+</li>
+<li>
+<p><code>--all(-a)</code> 展现所有的依赖包，即使有些与当前系统不兼容</p>
+</li>
+</ul>
+<h3 id="build">build</h3>
+<p><code>build</code> 指令会去构建源档案和轮子档案。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry build</span><br></pre></td></tr></table></figure>
+<p>需要注意，有时，只有纯 python 轮子被支持</p>
+<h4 id="选项-8">选项</h4>
+<ul>
+<li><code>--format(-f)</code> 限制格式，要么是 <code>wheel</code> ，要么是 <code>sdist</code></li>
+</ul>
+<h3 id="publish">publish</h3>
+<p>这个指令发布已经通过 <code>build</code> 指令构建好的依赖包，到远程仓库。</p>
+<p>如果这是第一次提交，那么在上传之前，该指令会自动登记这个 package。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry publish</span><br></pre></td></tr></table></figure>
+<p>如果我们加上 <code>--build</code> 选项，他也能构建依赖包。</p>
+<h4 id="选项-9">选项</h4>
+<ul>
+<li>
+<p><code>--repository(-r)</code>  依赖包要被登记到的仓库，默认是 <code>pypi</code>，它必须和 <code>config</code> 指令设定的其中一个仓库匹配</p>
+</li>
+<li>
+<p><code>--username(-u)</code>  访问存储库的用户名</p>
+</li>
+<li>
+<p><code>--password(-p)</code>  访问存储库的密码</p>
+</li>
+<li>
+<p><code>--cert</code> 访问存储库的证书颁发机构</p>
+</li>
+<li>
+<p><code>--client-cert</code>  用于访问存储库的客户端证书</p>
+</li>
+<li>
+<p><code>--build</code> 在发布之前构建依赖</p>
+</li>
+<li>
+<p><code>--dry-run</code>  除了上传依赖包以外，实现所有的操作</p>
+</li>
+<li>
+<p><code>--skip-existing</code> 忽略在仓库中已存在文件的错误</p>
+</li>
+</ul>
+<h3 id="config">config</h3>
+<p><code>config</code> 指令允许我们编辑 poetry 配置设置和仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry config ==list</span><br></pre></td></tr></table></figure>
+<h4 id="使用">使用</h4>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poetry config [options] [setting-key] [setting-value1] ... [setting-valueN]</span><br></pre></td></tr></table></figure>
+<p><code>setting-key</code> 是一个配置可选名而 <code>setting-value1</code> 则是一个配置值。</p>
+<h4 id="选项-10">选项</h4>
+<ul>
+<li>
+<p><code>--unset</code> 移除 被 <code>setting-key</code> 命名的配置元素</p>
+</li>
+<li>
+<p><code>--list</code> 展示当前配置变量的列表</p>
+</li>
+<li>
+<p><code>--local</code> 设置或者得到 对一个项目特殊的 配置（一个配置局部路径 <code>poetry.toml</code>）</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Jason Zeng, Anita Xiong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jason24-zeng.github.io/2023/03/05/Python-Project-Management-poetry-III/">https://jason24-zeng.github.io/2023/03/05/Python-Project-Management-poetry-III/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Poetry/">Poetry</a><a class="post-meta__tags" href="/tags/Project-Management/">Project Management</a><a class="post-meta__tags" href="/tags/Commands/">Commands</a></div><div class="post_share"><div class="social-share" data-image="/img/python_poetry.webp" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat/微信"/></a><div class="post-qr-code-desc">wechat/微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay/支付宝"/></a><div class="post-qr-code-desc">alipay/支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/03/05/python-poetry-II/"><img class="next-cover" src="/img/python_poetry.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Python Project Management - poetry (II)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2023/02/23/python-framework-poetry/" title="Python Project Management - poetry (I)"><img class="cover" src="/img/python_poetry.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-23</div><div class="title">Python Project Management - poetry (I)</div></div></a></div><div><a href="/2023/03/05/python-poetry-II/" title="Python Project Management - poetry (II)"><img class="cover" src="/img/python_poetry.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-05</div><div class="title">Python Project Management - poetry (II)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/kobe.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jason Zeng, Anita Xiong</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">46</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">64</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jason24-Zeng/" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:z5zeng@eng.ucsd.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/img/wechat_link.jpeg" target="_blank" title="Wechat"><i class="fab fa-weixin"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-number">1.</span> <span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E9%80%89%E9%A1%B9"><span class="toc-number">1.1.</span> <span class="toc-text">全局选项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#new"><span class="toc-number">1.2.</span> <span class="toc-text">new</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9"><span class="toc-number">1.2.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#init"><span class="toc-number">1.3.</span> <span class="toc-text">init</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-2"><span class="toc-number">1.3.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install"><span class="toc-number">1.4.</span> <span class="toc-text">install</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-3"><span class="toc-number">1.4.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update"><span class="toc-number">1.5.</span> <span class="toc-text">update</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-4"><span class="toc-number">1.5.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#add"><span class="toc-number">1.6.</span> <span class="toc-text">add</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-5"><span class="toc-number">1.6.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#remove"><span class="toc-number">1.7.</span> <span class="toc-text">remove</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-6"><span class="toc-number">1.7.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#show"><span class="toc-number">1.8.</span> <span class="toc-text">show</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-7"><span class="toc-number">1.8.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#build"><span class="toc-number">1.9.</span> <span class="toc-text">build</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-8"><span class="toc-number">1.9.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#publish"><span class="toc-number">1.10.</span> <span class="toc-text">publish</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-9"><span class="toc-number">1.10.1.</span> <span class="toc-text">选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#config"><span class="toc-number">1.11.</span> <span class="toc-text">config</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">1.11.1.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E9%A1%B9-10"><span class="toc-number">1.11.2.</span> <span class="toc-text">选项</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/Python-Project-Management-poetry-III/" title="Python Project Management - poetry (III)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (III)"/></a><div class="content"><a class="title" href="/2023/03/05/Python-Project-Management-poetry-III/" title="Python Project Management - poetry (III)">Python Project Management - poetry (III)</a><time datetime="2023-03-05T14:20:44.000Z" title="Created 2023-03-05 22:20:44">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/python-poetry-II/" title="Python Project Management - poetry (II)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (II)"/></a><div class="content"><a class="title" href="/2023/03/05/python-poetry-II/" title="Python Project Management - poetry (II)">Python Project Management - poetry (II)</a><time datetime="2023-03-05T07:27:17.000Z" title="Created 2023-03-05 15:27:17">2023-03-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/23/python-framework-poetry/" title="Python Project Management - poetry (I)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (I)"/></a><div class="content"><a class="title" href="/2023/02/23/python-framework-poetry/" title="Python Project Management - poetry (I)">Python Project Management - poetry (I)</a><time datetime="2023-02-23T15:06:55.000Z" title="Created 2023-02-23 23:06:55">2023-02-23</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/04/C-%E6%8A%80%E5%B7%A7/" title="C++ 技巧"><img src="/img/C-usable-example/C.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++ 技巧"/></a><div class="content"><a class="title" href="/2023/02/04/C-%E6%8A%80%E5%B7%A7/" title="C++ 技巧">C++ 技巧</a><time datetime="2023-02-04T10:00:06.000Z" title="Created 2023-02-04 18:00:06">2023-02-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/12/Build-Bazel-WORKSPACE-%E5%AD%A6%E4%B9%A0/" title="Bazel WORKSPACE 学习"><img src="/img/C-usable-example/C.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Bazel WORKSPACE 学习"/></a><div class="content"><a class="title" href="/2022/09/12/Build-Bazel-WORKSPACE-%E5%AD%A6%E4%B9%A0/" title="Bazel WORKSPACE 学习">Bazel WORKSPACE 学习</a><time datetime="2022-09-12T15:25:39.000Z" title="Created 2022-09-12 23:25:39">2022-09-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/python_poetry.webp')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Jason Zeng, Anita Xiong</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">follow your heart</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="rightside.chat_btn"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
   window.MathJax = {
     tex: {
       inlineMath: [ ['$','$'], ["\\(","\\)"]],
