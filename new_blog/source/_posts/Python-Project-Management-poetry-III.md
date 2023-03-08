@@ -278,3 +278,508 @@ poetry update requests toml
 - `--lock`：不执行安装，只更新锁文件。
 
 ### add
+
+`add` 指令增加要求的依赖包到 `pyproject.toml` 文件，并且安装它们。如果我们不指定一个版本限制，Poetry 会在可选依赖包版本里选择一个合适的。
+
+```shell
+poetry add requests pendulum
+```
+
+我们也可以指定一个限制：
+
+```shell
+# 允许 >=2.0.5, <3.0.0 的版本
+poetry add pendulum@^2.0.5
+
+# 允许 >2.0.5, <2.1.0 的版本
+poetry add pendulum@~2.0.5
+
+# 允许 >= 2.0.5 版本，没有上限
+poetry add "pendulum>=2.0.5"
+
+# 只允许 2.0.5 版本
+poetry add pendulum==2.0.5
+```
+
+如果我们尝试增加一个已经存在的依赖包，我们会得到一个报错。不过，如果我们制定一个如上的限制，依赖会被更新到指定限制的版本。
+
+如果我们想要得到已经存在依赖的最新版本，我们可以使用特殊的限制 `latest`
+
+```shell
+poetry add pendulum@latest
+```
+
+我们也能添加 `git` 依赖
+
+```shell
+poetry add git+https://github.com/sdispater/pendulum.git
+```
+
+或者用 ssh 取代 https
+
+```shell
+poetry add git+ssh://git@github.com/sdispater/pendulum.git
+
+# or alternatively:
+poetry add git+ssh://git@github.com:sdispater/pendulum.git
+```
+
+如果我们想要切刀特定分支，tag或版本，可以通过使用 add 指定它
+
+```shell
+poetry add git+https://github.com/sdispater/pendulum.git#develop
+poetry add git+https://github.com/sdispater/pendulum.git#2.0.5
+
+# or using SSH instead:
+poetry add git+ssh://github.com/sdispater/pendulum.git#develop
+poetry add git+ssh://github.com/sdispater/pendulum.git#2.0.5
+```
+
+或者引用一个子目录
+
+```shell
+poetry add git+https://github.com/myorg/mypackage_with_subdirs.git@main#subdirectory=subdir
+```
+
+另外，你也可以添加一个本地目录或文件
+
+```shell
+poetry add ./my-package/
+poetry add ../my-package/dist/my-package-0.1.0.tar.gz
+poetry add ../my-package/dist/my_package-0.1.0.whl
+```
+
+如果我们想要依赖能在可编辑模式下被安装，我们可以使用 `--editable` 选项
+
+```shell
+poetry add --editable ./my-package/
+poetry add --editable git+ssh://github.com/sdispater/pendulum.git#develop
+```
+
+可替代的，我们也可以在`pyproject.toml` 文件中声明它。这意味着在本地目录的改变会直接反映到环境中
+
+```toml
+[tool.poetry.dependencies]
+my-package = {path = "../my/path", develop = true}
+```
+
+如果我们想要安装的依赖包提供 extras，我们能在添加该依赖包时指定 extras：
+
+```shell
+poetry add "requests[security,socks]"
+poetry add "requests[security,socks]~=2.22.0"
+poetry add "git+https://github.com/pallets/flask.git@1.1.1[dotenv,dev]"
+```
+
+如果我们想要给一个指定依赖组添加依赖包，我们能使用 `--group(-G)` 操作
+
+```shell
+poetry add mkdorc --group docs
+```
+
+#### 选项
+
+- `--group(-G)` 要将依赖包添加到的依赖组名
+
+- `--dev(-D)` 添加依赖包到开发依赖，目前已经被弃用，使用 `-G dev` 代替。
+
+- `--editable(-e)` 增加 vcs 依赖或者路径依赖，并且令这些依赖为可编辑的。
+
+- `--extras(-E)` 添加的依赖需要激活的 extras，允许多值
+
+- `--optional` 增加一个可选依赖
+
+- `--python` 要想使用依赖必须安装的 python 版本
+
+- `--platform` 依赖必须要安装到的平台
+
+- `--source` 使用来安装依赖的源名字
+
+- `--allow-prereleases` 允许提前发布
+
+- `--dry-run` 输出操作，但不执行任何操作
+
+- `--lock` 不实现安装，值更新锁文件
+
+
+
+### remove
+
+`remove` 操作会从当前已安装依赖包中移除一个依赖包
+
+```shell
+poetry remove pendulum
+```
+
+如果我们想要为一个指定依赖组移除一个依赖包，我们可以使用 `-G` 选项
+
+```shell
+poetry remove mkdocs --group docs
+```
+
+#### 选项
+
+- `--group`  移除依赖项的组
+
+- `--dev(-D)` 从开发依赖移除依赖包
+
+- `--dry-run` 输出操作，但不执行任何操作
+
+
+
+### show
+
+为了列出所有可选依赖包，我们可以使用 `show` 命令
+
+```shell
+poetry show
+```
+
+如果想要看一个指定依赖包的细节，我们能传入依赖包名字
+
+```shell
+poetry show pendulum
+
+name        : pendulum
+version     : 1.4.2
+description : Python datetimes made easy
+
+dependencies
+ - python-dateutil >=2.6.1
+ - tzlocal >=1.4
+ - pytzdata >=2017.2.2
+
+required by
+ - calendar >=1.4.0
+```
+
+#### 选项
+
+- `--without` 要忽略的依赖组
+
+- `--why` 当站址整个列表，或者对一个单一依赖包使用 `-tree` 时，展示为什么一个依赖包会被 include。
+
+- `--with` 要包含的可选依赖组
+
+- `--only` 要仅包含的依赖组
+
+- `--no-dev` 不用列出 dev dependencies
+
+- `--tree` 将依赖按照树状图的格式罗列
+
+- `--latest(-l)` 展现最近的版本
+
+- `--outdated(-o)` 展现最新的版本，但进适用于过时的依赖包
+
+- `--all(-a)` 展现所有的依赖包，即使有些与当前系统不兼容
+
+### build
+
+`build` 指令会去构建源档案和轮子档案。
+
+```shell
+poetry build
+```
+
+需要注意，有时，只有纯 python 轮子被支持
+
+#### 选项
+
+- `--format(-f)` 限制格式，要么是 `wheel` ，要么是 `sdist`
+
+### publish
+
+这个指令发布已经通过 `build` 指令构建好的依赖包，到远程仓库。
+
+如果这是第一次提交，那么在上传之前，该指令会自动登记这个 package。
+
+```shell
+poetry publish
+```
+
+如果我们加上 `--build` 选项，他也能构建依赖包。
+
+#### 选项
+
+- `--repository(-r)`  依赖包要被登记到的仓库，默认是 `pypi`，它必须和 `config` 指令设定的其中一个仓库匹配
+
+- `--username(-u)`  访问存储库的用户名
+
+- `--password(-p)`  访问存储库的密码
+
+- `--cert` 访问存储库的证书颁发机构
+
+- `--client-cert`  用于访问存储库的客户端证书
+
+- `--build` 在发布之前构建依赖
+
+- `--dry-run`  除了上传依赖包以外，实现所有的操作
+
+- `--skip-existing` 忽略在仓库中已存在文件的错误
+
+
+
+### config
+
+`config` 指令允许我们编辑 poetry 配置设置和仓库
+
+```shell
+poetry config ==list
+```
+
+#### 使用
+
+```shell
+poetry config [options] [setting-key] [setting-value1] ... [setting-valueN]
+```
+
+`setting-key` 是一个配置可选名而 `setting-value1` 则是一个配置值。
+
+#### 选项
+
+- `--unset` 移除 被 `setting-key` 命名的配置元素
+
+- `--list` 展示当前配置变量的列表
+
+- `--local` 设置或者得到 对一个项目特殊的 配置（一个配置局部路径 `poetry.toml`）
+
+### run
+
+`run` 指令在项目的虚拟环境中执行给定的命令
+
+```shell
+poetry run python -V
+```
+
+它也能执行 `pyproject.toml` 中定义的脚本之一。
+
+所以，如果我们已经定义一个如下的脚本
+
+```toml
+[tool.poetry.scripts]
+my-script = "module:main"
+```
+
+我们能如下执行脚本：
+
+```shell
+poetry run my-script
+```
+
+需要注意该指令没有可选项
+
+### shell
+
+`shell` 指令根据 `$SHELL` 环境变量在虚拟环境中生成一个 shell，如果还不存在一个虚拟环境，则该指令会先创建一个。
+
+```shell
+poetry shell
+```
+
+注意这个指令会创建一个新的 shell 并且激活虚拟环境。因此，我们应该使用 `exit` 来正确退出 shell 和虚拟环境，而不是停用。
+
+### check
+
+`check` 指令会检验 `pyproject.toml` 文件结构的有效性，如果有任何问题，它会返回一个细节报告。该指令也并用做 pre-commit hook。
+
+```shell
+poetry check
+```
+
+### search
+
+该指令会在远程索引上搜索依赖包
+
+```shell
+poetry search requests pendulum
+```
+
+### lock
+
+该指令锁住在 `pyproject.toml` 中制定的依赖，但是不会安装。
+
+```shell
+poetry lock
+```
+
+#### 选项
+
+- `--check` 验证 `poetry.lock` 和 `pyproject.toml` 一致
+
+- `--no-update` 不更新锁定的版本，只更新 lock 文件
+
+
+
+### version
+
+该指令展示项目当前的版本，或者提升项目的版本，并将新版本写回 `pyproject.toml`（如果提供了有效的提升规则的话）
+
+新版本需要是一个有效地 [PEP 440](https://peps.python.org/pep-0440/) 字符串或者有效地提升规则：`patch`,`minor`,`major`,`prepatch`,`preminor`,`premajor`,`prerelease`。
+
+| RULE       | BEFORE  | AFTER   |
+|:----------:|:-------:|:-------:|
+| major      | 1.3.0   | 2.0.0   |
+| minor      | 2.1.4   | 2.2.0   |
+| patch      | 4.1.1   | 4.1.2   |
+| premajor   | 1.0.2   | 2.0.0a0 |
+| preminor   | 1.0.2   | 1.1.0a0 |
+| prepatch   | 1.0.2   | 1.0.3a0 |
+| prerelease | 1.0.2   | 1.0.3a0 |
+| prerelease | 1.0.3a0 | 1.0.3a1 |
+| prerelease | 1.0.3b0 | 1.0.3b1 |
+
+#### 选项
+
+- `--short(-s)` 只输出版本号
+
+- `--dry-run` 不更新 `pyproject.toml` 文件
+
+### export
+
+这个指令导出 lock 文件到其他格式
+
+```shell
+poetry export -f requirements.txt --output requirements.txt
+```
+
+该指令被 [Export Poetry Plugin](https://github.com/python-poetry/poetry-plugin-export) 提供，并且也可以被用作一个 pre-commit hook。
+
+在不指定任何选项是，这个指令只会包含定义在 `main` 依赖组里的项目以来，即 `tool.poetry.dependencies` 中的，这和 `install` 选项不同。
+
+#### 选项
+
+- `--format(-f)` 导出的格式，默认为 `requirements.txt`。当前，只支持 `constraints.txt` 和 `requirement.txt`
+
+- `--output(-o)` 输出文件的名字，如果不填，它会输出到标准输出中
+
+- `--dev` 包含开发环境依赖，目前已被弃用，使用 `--with dev` 代替
+
+- `--extras(-E)` 包含的额外依赖集合
+
+- `--without` 忽略的依赖组
+
+- `--with` 包含的可选依赖组
+
+- `--only` 仅会包含的依赖组
+
+- `--without-hashes` 从导出的文件去除 hashes
+
+- `--without-url` 从导出的文件中去除源仓库 urls
+
+- `--with-credentials` 包括额外索引的凭据
+
+### env
+
+`env` 环境指令重组子命令以与特定项目关联的 virtualenvs（虚拟环境） 交互。详细可以查询  [Managing environments](https://python-poetry.org/docs/managing-environments/) 的相关信息
+
+### cache
+
+`cache` 指令会重组子命令，以与 Poetry 的缓存进行交互
+
+#### cache list
+
+`cache list` 命令会列出 Poetry 的所有可用 缓存
+
+```shell
+poetry cache list
+```
+
+#### cache clear
+
+`cache clear` 指令会从一个缓存的仓库中移除依赖包
+
+比如，为了清理 `pypi` 仓库内依赖包的所有缓存，可以执行：
+
+```shell
+poetry cache clear pypi --all
+```
+
+如果只想从缓存中移除一个指定的依赖包，我们必须指定缓存入口，方式如 `cache:package:version`
+
+```shell
+poetry cache clear pypi:requests:2.24.0
+```
+
+### source
+
+`source` 命名空间重组子命令，并以此为一个 Poetry 项目管理仓库源
+
+#### source add
+
+`source add ` 指令为项目增加源码配置。比如，为了增加 `pypi-test` 源码，我们可以执行
+
+```shell
+poetry source add pypi-test https://test.pypi.org/simple/
+```
+
+注意，我们不能使用 `pypi` 作为名字，因为它以备用来作为默认的 `PyPI` 源
+
+##### 选项
+
+- `--default` 设置这个源为默认，取消 PyPI 的默认
+
+- `--secondary` 将该源设为次要源
+
+我们不能将一个源既设定成 default 又设定成 secondary
+
+#### source show
+
+`source show` 指令展现有关项目所有已配置源的信息
+
+```shell
+poetry source show
+```
+
+可选的，我们能只展现指定的某个或某几个源
+
+```shell
+poetry source show pypi-test
+```
+
+该指令只会展示通过 `pyproject.toml` 中配置的源，并且不会包括 PyPI
+
+#### source remove
+
+`source remove` 指令会从 `pyproject.toml` 中移除一个配置的源
+
+```shell
+poetry source remove pypi-test
+```
+
+### about
+
+`about` 指令可以展示关于 Poetry 的全局信息，包括当前版本和 `poetry-core` 的版本
+
+```shell
+poetry about
+```
+
+### help
+
+`help` 指令显式全局的帮助。或者一个特殊指令的帮助。
+
+想要展示全局的帮助选项：
+
+```shell
+poetry help
+```
+
+为了展示对某个特定指令的帮助，比如 `show`，输出指令如下
+
+```shell
+poetry help show
+```
+
+`--help` 指令也能被传给任何指令以得到特定指令的帮助，比如：
+
+```shell
+poetry show --help
+```
+
+### list
+
+`list` 指令展现所有可用的 Poetry 指令
+
+```shell
+poetry list
+```
