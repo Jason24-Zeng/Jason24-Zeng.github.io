@@ -783,3 +783,133 @@ poetry show --help
 ```shell
 poetry list
 ```
+
+### self
+
+`self` 命名空间重组子命令去管理自身的 Poetry 安装。使用这些指令会在我们的配置目录下创建要求的 `pyproject.toml` 和 `poetry.lock` 文件
+
+#### self add
+
+`self add` 命令安装 Poetry 插件，并且让他们在运行期可用。另外，他也能被使用来更新 `Poetry` 自身的依赖或者想运行环境输入额外的依赖包。
+
+> `self add` 指令和 `add` 指令的效果几乎一样，唯一的不同是，其管理的依赖包是在 Poetry 运行环境生效的。
+> 
+> 被 `self add` 支持的依赖包指定格式和 `add` 指令完全一致
+
+例如，为了安装 `poetry-plugin-export` ，我们可以执行 
+
+```shell
+poetry self add poetry-plugin-export
+```
+
+为了安装最新的 `poetry-core` 版本，我们可以运行
+
+```shell
+poetry self add poetry-core@latest
+```
+
+为了安装一个钥匙提供器 `artifacts-keyring`，我们可以执行
+
+```shell
+poetry self add artifacts-keyring
+```
+
+##### 选项
+
+- `--editable(-e)` 以可编辑的权限增加 vcs/path 依赖
+
+- `--extras(-E)` 为了依赖需要激活的特征
+
+- `--allow-prereleases` 允许提前发布
+
+- `--source` 使用来安装依赖包的源名
+
+- `--dry-run` 输出执行操作但是不执行任何东西，它会隐式得打开 `-verbose`
+
+#### self update
+
+`self update` 指令会在它当前的运行期环境中更新 Poetry 版本
+
+```shell
+poetry self update
+```
+
+##### 选项
+
+- `--preview` 允许预发布版本的安装
+
+- `--dry-run` 输出执行操作但是不指定任何东西，它会隐式得打开 `-verbose`
+
+#### self lock
+
+`self lock` 指令会阅读该 Poetry 安装的系统 `pyproject.toml` 文件。系统依赖被锁定在对应的 `poetry.lock` 文件中 
+
+```shell
+poetry self lock
+```
+
+##### 选项
+
+- `--check` 检验 `poetry.lock` 与 `pyproject.toml` 一致
+
+- `--no-update` 不安装锁定的版本，只更新锁文件
+
+#### self show
+
+`self show` 指令和 `show` 指令表现相似，但是是在 Poetry 运行期环境内生效。它会列举在 Poetry 安装环境中安装的所有依赖包
+
+为了只展示通过 `self add` 增加的额外依赖包及其依赖，我们可以使用 `self show --addons`
+
+```shell
+poetry self show
+```
+
+##### 选项
+
+- `--addons` 只列举 addon 附加安装的依赖包
+
+- `--tree` 以树结构形式列举依赖
+
+- `--latest(-l)` 展示最新版本
+
+- `--outdated(-o)` 只为已经过时的依赖包展示最新版本
+
+#### self show plugins
+
+`self show plugins` 指令会列举当前所有安装的插件
+
+```shell
+poetry self show plugins
+```
+
+#### self remove
+
+`self remove` 指令移除一个安装的 addon 附加依赖包
+
+```shell 
+poetry self remove poetry-plugin-export
+```
+
+##### 选项
+
+- `--dry-run` 输出执行操作但是不指定任何东西，它会隐式得打开 `-verbose`
+
+#### self install
+
+`self install` 指令确保所有被指定的额外依赖包都已经被安装到当前运行环境中。
+
+```shell
+poetry self install --sync
+```
+
+##### 选项
+
+- `--sync` 与锁定的依赖包和指定的组进行同步
+
+- `--dry-run`  输出执行操作但是不指定任何东西，它会隐式得打开 `-verbose`
+
+
+
+## Reference
+
+[Poetry Command Instruction](https://python-poetry.org/docs/cli/#options-13)
