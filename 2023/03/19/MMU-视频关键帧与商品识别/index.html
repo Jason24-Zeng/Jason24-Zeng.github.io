@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MMU - 视频关键帧与商品识别 | Jason &amp; Anita's Blog</title><meta name="keywords" content="Multi Media Understanding,视频抽帧"><meta name="author" content="Jason Zeng, Anita Xiong"><meta name="copyright" content="Jason Zeng, Anita Xiong"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MMU - 视频关键帧与商品识别">
+<meta property="og:url" content="https://jason24-zeng.github.io/2023/03/19/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/index.html">
+<meta property="og:site_name" content="Jason &amp; Anita&#39;s Blog">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://jason24-zeng.github.io/img/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/entire_workflow.png">
+<meta property="article:published_time" content="2023-03-19T14:37:39.000Z">
+<meta property="article:modified_time" content="2023-03-19T14:47:18.282Z">
+<meta property="article:author" content="Jason Zeng, Anita Xiong">
+<meta property="article:tag" content="Multi Media Understanding">
+<meta property="article:tag" content="视频抽帧">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jason24-zeng.github.io/img/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/entire_workflow.png"><link rel="shortcut icon" href="/img/kobe.jpeg"><link rel="canonical" href="https://jason24-zeng.github.io/2023/03/19/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"We didn't find any results for the search: ${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MMU - 视频关键帧与商品识别',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-03-19 22:47:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.0.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/kobe.jpeg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">50</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa-fw fa fa-book"></i><span> Find</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/entire_workflow.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Jason &amp; Anita's Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> Search</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fa-fw fa fa-book"></i><span> Find</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></li><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MMU - 视频关键帧与商品识别</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-03-19T14:37:39.000Z" title="Created 2023-03-19 22:37:39">2023-03-19</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-03-19T14:47:18.282Z" title="Updated 2023-03-19 22:47:18">2023-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Business-MindMap/">Business MindMap</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Business-MindMap/Search/">Search</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">6</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>1min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MMU - 视频关键帧与商品识别"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="46d245f58dad73a47fc05704345e607c28c5a6b96be1f59e55b4c101a3a7c9a2">d8d42b59f128a57d0f6a623c69489aeedc58485823473be982eedb9fdbd18630775ebccedf87d40be8e99d4f93f7687d3adba563c80113a5976aee5aa372ca3cd0591a1762813413810c2cfad2579315c439b272eef8e03889646a469315a2fa0842a393317de910acfd57e8d9e3c35c69f85bb03300ca779babf2a2238280683053b194ec1fcf56dcceaa86e35e5219a41709d4e0c38653cf438f0d6ef47f45795e78c9333c99f606889b53be8f28d20b5d260b002bf76e30db6a7cf8bdb3641b6cc6d64182cdb91374219de804b9fecd26a89f777e85e4b35f2545f5b05a5c9bd66ecb69351a585d05829b715ea06cb6cd05935c06ee4a75a0fce8330202d442250d978dc16374c9593362d30f2037c0703a347196651c5fd60691d25870ae6a7d3942cfc0f72cc10297e3de174943840f0d12bef09c11fefe817d76ac7a5ee7db3cfc5f81a733067edb2550318112bcb3eeb3420303771f8709b0134e1e4a3d077d7514313686d0af20ebd5c78ed499e379e843a3a901f119777d019ea7837af4fcc890c447aac5885db68e26898ee0d2e1a247d54a35ef685b3f8342e84790c29bc91d1c116ccd745d12d37de7975b54cecf212ca125fde09d46b6697d2d488ad7cbd44a5997cc5feb27f3593be619c4a504c7d90206591062b9ac2f7b49282f0de7d1ca972771c6cf486e308905bddf504386dd68b82e4797fc53027f24e64e40116c79ef8b8ee1550fb9bc5d2c4a7d4e9338fa64ce34e42f2161e58599217fb39ab5d0121f77730425b518266ba14951a26b7a488bf24d35c4eb46bca76f499b4ab33d92d60acfa04258d34d80554eb192037f9e96ff2b8d56376ffbd61b7cc782fe46b1d723df636c29064e2bef2f7dde87aaa80c940edcfc0c0111f5b365c4a4505d7a51cb636f28f6b6d203bdb79c8669f163b8839e8623348bd0b578f4453308906f1fcde1615dadbc2f7bbe8aa4e5c6e2d5eb7e0d11f7d44d46f0cd945551d8a284240206095bfc464a405e480848912db341fd9c7ffd8c908d57e4b0f7014ddef9211b5653ba6ef16ff12699f9c80cd658cc164ddf95d0f173ede57e36fa387003edeb1314cc01738150787b54d824e8b794c166a4cc4543433af6d54c893505a6ca3639381081b98ee58f361875f497a84b70084ca18c3a2f34be7ca0834d162e488dc37f9302d74381775746f50b2c55d724a22aea698c3f3c73e9863f4bfeb6f5527840d66f135e26c531aa14879362726444add91aa7470a8585f3bed12d30b5e4b4387fa1cfcacc1e937cc0ccb62c4bebb52d35c4578574c563798f9f5274dd13e595bb8df634517478f987af9b9444eaf9d53128043a7983afca8ac1b837e0e7392df54e968be0fa4bd0e6068804cfaf95a99bbfd524976f4169f0538ceb40bb7ab629bef301bdf59e09af27853e228c536895640b59722d11746d8407a66ddcfdc84726014eedaffc2cfbae2260cf303181cb4baf98cfe54267b44eced487cae291d824289fc6e63520887ca81176608707ad5b8f97094d6a6993255150ef5cbc4fa9961a8a0fb935cbd02c1fb01a5e60d38e92e7b8119853ea433438bda4353799a4996a8daa956f45055600944971f3b361abfb57b07ec9f1b287ce3400a6e44fab585459838eb01af1a520a889a45de7f09fbef9c6b6bc6aca52299f53bc7901a5e136be7584e653851c27d6b9a4f969be8d5f6a1b0ad0d603e3fafe5de3f6565c8c114ca9792f75471c6f83d1f70ad180452f895dd6790c45bd3681d56407793c9f19d6877194ac8d2cb6da5b6e3f5867746a6a33e36f9b8d68d392dee8ac4cb0b6e34d845b2497df37b4408bc153b3ac9c7ff5e518911ba0fad6bfbf0a26c7af7912b8ed6b47b8d11f3fea7adfcb658b0db725470e58beedef9babb18716d8ec33f728c137cc9b2de528d760b6705fc59a18519c94d3d006900e4adb41ab8dd2629a5d89d1845bb899bd7b421a500f4c035b791c66edaf5d8204e635f31e51f438bb1e1638d8c360c609d1bbb4936c62f4ec37bd097595059c05719b1b48a189a73f0b40747d9a46c6134a53bdfabddfcf1238eb17e209e4429ab9e6a206a8afa255fa67f3fafac7fcd094325367ae4c01bb70a2474ef8a19184a5825d33ff6e6b047613839c2f79685079890583961d3520191d6aa3f4ec7ccf8c1c28a092686a9641ce81f28b55c0aee3f341ce025deafc078e291e1cdab174973bf0269549f64885183115d97895b63fae3c8701d6bb2ff56310c5b38655a0ae6d69f03a6aa0e78be3cbaa3436cda06bb2cbff456d116f0fda585af5b7747771192ba5433ecc5fd5447d8eefa6d9c97a593363ea727a6f1a8b637e017641acb207dd093a4a264c57e0a24e39216af22bf922c74fd02d5e008ddc086e4091f3fffb7373d448c808ead994f4e268db71bcc7c719a75ebb322ceee0fc91cfa0f39b1008370aea2fae093d2fe24ab4bb9d156b26144b2b35d4b95662e4334943513dadc21464134ec421ea72d857c5323737f0d3d43271990f25d05960229f4559041eb2c80423d540da4429050ebaf0d8691f03f88d0e1a8cf52e634e682a7279f9005dd0337e20b056f0be0b30fa4b43ece91cd88dce4c7ba921af6fed30ff4ff97f9ceca41a967ea1761cbabd678f58a42bba1e18c894758b2df6b022a75cd0278c568be2c9fbfaa3cfdbbd1c7e6db6045ffc2fe64f396a42944023e10d266c3d024d27733eb1f74c133bc45312c61acad69e5be5de305a4b72f011c424b691fb019d54b434598372a94e192f5b98efc2366ac4e74932f7f47e7b0d1ea9f958a88d04970b7c2f2b4d5a3fc75ab737a84d8601229e74eaa8ff91b6283e432ac99b7110380c1325164909eac148a6bf89bbfff304909bc2a537655e670ce0298eb53d107cccb2038d9b44612e8c6650a43f880b612afe752b489c3d3d7bf5cc7702737a0098fe62ea509b2a6a8a3b14bc8f93f3a4f3e634e3a786558e45551cddab204803985bcd9853e919d7ffee7801e5192065c6c332bb59fb10ad170838284f9202bab3bf5cca0c3a99564b66b8472bd77ce1382e05820755666d4aba881a5ce600f4d9a72dd5f3b240b30ecd3a20a4d2a354b1ec42734706e7f1b00ca123883fb0b8dd77949f9149809471f007ff6a78881f32b567227ea8cfa625cf855c97378de88facdd8fea201baeef45c648f4e9443ee026fef3df99488f773d5577972bc53202a809f04c21bcc365f6e9d794efbef4d24eefe55464ec28093d3825faba4a9b3642c6756c754a9cde929fb334c5168d40e3972e7fc5535b50cac80f82bf987b0d5ab9e3a38ee591286ea1d26799aac30b8271f7e1a794399cd8b7d2a1a0b4f96eeef0bbec504d2dec1b97c0b3fe5b0460332318739b35379be74d03df79967b6ab15440f93a4bc444e4b8f390ef51050e3f323c9820502827552380e57e9f4427f155c0df619eec70ee3aeccd1707eda2960f03a19ec06a74adc2a41c6ec5377c2ab6178843fc02462e95c86ab5181e7093f928e67be7cbf5416c85f2b661b0d1e3f7e651e49ce83b51e4af43e8ace2013109fe47b564cad15e8cfe69f8316d57eb276915b8aa25963ada4f232b8365f49d150c440fa9be845fcdb9fc94377f7c006f8cd0259fe3c0f3565349174659565b6145caa9f683b8780b1e35c4b86ca042817d76737fabbbfdc279ef8aa0baeeb1f3d83b3fd59e885253cab543152687ae4e1fef49420e9b8092b9ff227274b62cd246a5f1dfe2f698abd84fca2a3fdc88e184f125f0b6d715756b1772919ca53aa64d8d3d07bbb638ca5d5a3ec3a1dbe4755ef839aabf2d5a85d520406c3f26aa8a7066b3c44e7a0881ee508273b244a54f0a7cd54d6f34345819dbfb4b8ecb411e5e87be1ab290034c8a755ffdac7820bc63274006207701f54049f6e9a5e8c4c93fb43445a0db992f9fa70257abc878764acc1a2d118375434edfb3f718a9ceef4e14c66e8826db0dc627bb2ce7ec7c1185dfd77ee6645e19851cca1dd16e2b2cdeb93c87549e17f03deb1e810351eeff2110dfc02e9bad84735625b7ebe48f858aeb1c3955b009e1929ed48345b31c8850fe1729b4ae57c55bd2d8d35fc28e9e897a690523220d0687630cbee7a30a46ead41639ed6b2cc3086a682eb395a4812adaf68351001bca8a9c94f5dddf3c1fd7ade8a201e9edf94014d7ef19ea950b6432750e13aff12d806e4d255ae4d3f8b113eadf7931bd2e257995177d14004d86d362871b5a2f47f3ea25ae47492f6d75318195c1263ae22dcb015f279553d6116f26e8afa9ee06b1e80c0fa30068ce800c30154c17aa8b37ebec6ce0e1042b465268e748abd3da7fa3594a0b06111bacf2a43e21763bd8359c278743ad25a16bfeff38645636c614e1893274190ecf406edda5abda9e98b802bb7e6f58c2370db1dcbd2cf55e07bd1ad8ca77c9d03fbe6586ff1c9d3c22c96176fa93e243b1cddcd68cc065b7c7dd4f351d30d8146d3aeb5df5848053e7cccf6f32bb8c031122b91909c95c78c2f3f19acb9df1097757bd145db40a738e8f3db00958735f69e1617dfc27d86fe95a10321e604cd28ad26c2463f840913a9e851e38ea44ea07b882df240b6bcd7b6dc96930ece33053f99f83cc4f6b4553b7962c1cd3e77d63a3b291727b4727da456a811fce566db230fe936b185caff8710e36ba581cca04fe053aaf3a51fac3533fcb9c4d3d4f244dd4417ef62f08dfaa04e2a5fe89fafb22a9269e3e2d025ad47fb8019b11ffe8233db9d2d3c502ec7164dc9f5b323ab5177bdec4911ca6fd139950a6ccb544eba0a7a3c11377f989039d638f779813e778283e0fc7c74b4ebce986636e1d2687d2ae1cc6c41641a1616cffbf232822fd3ccedebb05714b558f4bd613addddad927e6c6d5820fbecd3cfdfd03c2a02f8ca5c455bc6a886475f3cbabc8ac03453c29c55570f7e12d001a370db7a560de255329ea842308975e841fb1da637399995376cfe2cca47f976a5adeb1df964e6784037365b3968ae458a79a2c608701d302d5ea554287d47c40d018c6a8724a6a665ac69cfbc90d8df7e8722f795dc19fae7c10b744429cce0bd4105097b5bdf503f61355743d7ba69f997396626b87774046d6a2ab9d0d4f52c7cfeab528f5dcf6bf123708e0e36382d383e0b6eda4ac70cfd27a001ad901e6aa901375d6d001b0880b8d3cb4b91825e99cf9afff152ade7d1d734ea94daa39209f35631f29299781083da9410216fa6ef086f2d84627f78d07375555482798f8bc72852574ab08bfc9330344012931a069d18a7fa89d496a57bd5c38440cc19671b3a4a21b2e4caef146ae33afe9fac76c8177a40f193faccc95c5a1cd595a9da40a1b54b8b0d1501362fcbb3af47da92d0fe6b4cbabf9042f263960c1aa5e37b40b7b33c02bd4566d79296d051cfd491639b647e316d8cfa6b838f8316581ab64efc6a35a55c5afd2a17d217b0b1ba49da250328d487adf56bc3144f584afb2c7495e8284763c2ecaca38d8930cb5261161d1c9525b85268818eb040171c308bcc26fbf58a5e70320af92351c1876fdcc34ff8e31d8e67c330792ad82bdffeceee222981d4deaf1c716ef1a2144a55404bc0e86e17329cd3955ed647b8ec89952062e39805fd7a5c4b76d327e710d9930cff95f9ce2a60a50e7da50c77c1c139b44e20d9773f9f57869aeb723de9def0268cdb67d4e9f1924e98002ad1f8063d0d46f8690b0bf852759c770c4beb5430bca6c4377cf431b20e8852fb60f4b6e0f466cdf5947a5fb697cfd170802a596daf251545e94396028536211cf3265e35b752f0662048a68490f95dfde655b1651d1519680290eba6fe96e0def86d9eb2287c4c57312a59818bfb03be04f5e839e531c5ed8290aec48fb28b7cfe44727b84f271f239615f2eab86b1884b05bfb107568099798fce8889f6252c3d06a85af096565ca45694c0360d7c2aaadcfb310ea7cc344631f321eec2b2fb344ab4ef196dab3052c10aed304404d802ff0d996dfa960c5a378f33051a163e4ec41e9d709c92bfce455138b0a3f89bf498dc19eb1ce2c7d40e03920a6666e477a3eb9f6e07ae610d640ffcd8f7aa82ac9179f7fd62e3b471171296cb27574e1783e9a987084d7275fc7eea02c8835f6e26248cc0d78c25b8d02c6dd88a3537ca0330192c12178e1f795c03e2f0bfa73ca676b270f30f6842a0a5c7cf2bfc4f132e203f7527de7f1efb002411aec1f2c95d0fc096988a577cb0e84b27f6e4d1688f976fd1bf77f5a2abf6dbcf097be3fc350d7db214db84af17b05922904f50f2c34400b9ea6b8dd5489d727f928a00f3e50d7afbc9b63954381c19b3fe7a9e814334ac470ed503411204b169395ad8d526620f8aca4cff5d8145b1521f1828a34fff8023a4f1b9a9abfa077b6f31a05e6d72aaddde6eaa114b8dc885b6c6ad5318473647a5605fccf1798a680f4aaa60f1c4b24641b4bdc28b4c3a1ec3538fc6e449a43548c69b78427d79eb3316cc72c56c084a7c6891d86cf2748ad82afede9dfe925e390cc4a4450d318f349cbcc098f95062aa3fbbef9e8d6a401dbe16b1a7e93a33cf78f0e60f765962837726cd9ddd08400e7c71f66ce45fab0347dd11aaca352d084d6e1ff827de258caa49006b277fa3f5213d50fec419cc592e85435528705b8bb89356c77ad39655e6c80ef6418576aeb9e6d559458607946a64beb5e1876016cf9d832cf598bdf8fc9b88103321de5476cd994fa8e2ff48b95b2dc8126aae472b5b362546582bd1c918c0f1e1ff1f76b5fc31c791a830f316525b81ebc325935c99e709bd9e49aa9ce87f9943cffbeb275636e8659550a268d1d730ca5d4a15bcde534f335c4d0a068fc8c3f0b2b51950f6c758cd1f210420e78cba11143d0160a7ab873a78a36cb922fb567d3f0e000d145214d2d53fe7f39a45339c5cf20a3c5dbfac23c7fc5fe6dca6ac28bad603c9614e7033c6badb9ad93644e7d8428aef06c0d0d037c35d68e14c2e4cb3f49f91b21e468b07f9f7f95ce3cff687f33cfcec425126b00c5ca2bd545781936f6959149a7ec140ba97e7eda557f16adee7c51dad2007aa525835e6576d81ab2a8515fb59f36d218b8466d1c810cfffee2558aa589c3c259196a4f7ef2b3063cb3f1f0b7fa0c65586b25ebefceb54cd9d277b56a3c42fe6a38c0bc53de161503c6330b1f61f76510296d24f7e6bb94398005c9c8f488a1395c864b2ada96e3fe55634b045bbd4fe8af5cb135c88c1a2fbee79328dce9d72f98a1c4bcd470d3b72e4f0d39e33c3ffc821d6096b60c00ff94f8a7fa3a91ace08f0f3b65c12f7163f542ebd1364fa057cc22293084e9e7f0c361ac84f9b82c44c065e0c49dc3757d4857e4fec1ae281496d0ca387da61380548350901a6712f13f34b2d43c94fe471e8d8f9dc5e1dc7f2ede4cbb78a41706ca6048d077b6d53a015aa67f5eb40a96a390d0db51c225bfe2d23f7c7750aebe6e05ccf43234961f7eca17bb5e88d5bb47d11ffdd0973dc9fd158b34952f41564d83208c0cfcf3c0748295650c411a5ee588715c7eed5b6b3221d09de8d66118367fd38614666709dc8d4e8e1a79a1d8c04ebc627541d0d6f5ebdc83735a2c05a2c9aea7bd792bd5398bdb807242a26b8abfabe6fc95b414bd0a8551df2ccbe80ffee3dff46b6599</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css"></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined" rel="external nofollow noreferrer">Jason Zeng, Anita Xiong</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jason24-zeng.github.io/2023/03/19/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/">https://jason24-zeng.github.io/2023/03/19/MMU-视频关键帧与商品识别/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener external nofollow noreferrer" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Multi-Media-Understanding/">Multi Media Understanding</a><a class="post-meta__tags" href="/tags/%E8%A7%86%E9%A2%91%E6%8A%BD%E5%B8%A7/">视频抽帧</a></div><div class="post_share"><div class="social-share" data-image="/img/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/entire_workflow.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button button--animated"><i class="fas fa-qrcode"></i> Donate</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.jpg" target="_blank"><img class="post-qr-code-img" src="/img/wechat.jpg" alt="wechat/微信"/></a><div class="post-qr-code-desc">wechat/微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src="/img/alipay.jpg" alt="alipay/支付宝"/></a><div class="post-qr-code-desc">alipay/支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/03/19/%E7%AB%99%E5%86%85%E5%95%86%E5%93%81%E6%B3%9B%E5%8C%96/"><img class="next-cover" src="/img/%E7%AB%99%E5%86%85%E5%95%86%E5%93%81%E6%B3%9B%E5%8C%96/entire_workflow.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">站内商品泛化</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/kobe.jpeg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Jason Zeng, Anita Xiong</div><div class="author-info__description"></div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">50</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">68</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">26</div></a></div></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Jason24-Zeng/" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:z5zeng@eng.ucsd.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="/img/wechat_link.jpeg" target="_blank" title="Wechat"><i class="fab fa-weixin"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content toc-div-class" style="display:none"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%A1%86%E6%9E%B6"><span class="toc-number">2.</span> <span class="toc-text">整体框架</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%B8%A7%E6%A3%80%E6%B5%8B"><span class="toc-number">3.</span> <span class="toc-text">关键帧检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%95%86%E5%93%81%E6%A3%80%E7%B4%A2"><span class="toc-number">4.</span> <span class="toc-text">商品检索</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E6%9C%9F%E6%96%B9%E6%A1%88%EF%BC%9A%E5%9B%BE%E5%83%8F%E6%A3%80%E7%B4%A2"><span class="toc-number">4.1.</span> <span class="toc-text">一期方案：图像检索</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E5%BA%93"><span class="toc-number">4.1.1.</span> <span class="toc-text">检索库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E7%B4%A2%E6%80%A7%E8%83%BD"><span class="toc-number">4.1.2.</span> <span class="toc-text">检索性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%96%B9%E6%A1%88%EF%BC%9A-MMU-%E5%95%86%E5%93%81%E6%A3%80%E7%B4%A2TechDesign%EF%BC%88%E6%96%B0%EF%BC%89"><span class="toc-number">4.1.3.</span> <span class="toc-text">算法方案： MMU-商品检索TechDesign（新）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E6%9C%9F%E6%96%B9%E6%A1%88%EF%BC%9A%E5%A4%9A%E6%A8%A1%E6%80%81%E6%A3%80%E7%B4%A2"><span class="toc-number">4.1.4.</span> <span class="toc-text">二期方案：多模态检索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="toc-number">4.1.5.</span> <span class="toc-text">算法方案：</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/03/19/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/" title="MMU - 视频关键帧与商品识别"><img src="/img/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/entire_workflow.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MMU - 视频关键帧与商品识别"/></a><div class="content"><a class="title" href="/2023/03/19/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/" title="MMU - 视频关键帧与商品识别">MMU - 视频关键帧与商品识别</a><time datetime="2023-03-19T14:37:39.000Z" title="Created 2023-03-19 22:37:39">2023-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/19/%E7%AB%99%E5%86%85%E5%95%86%E5%93%81%E6%B3%9B%E5%8C%96/" title="站内商品泛化"><img src="/img/%E7%AB%99%E5%86%85%E5%95%86%E5%93%81%E6%B3%9B%E5%8C%96/entire_workflow.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="站内商品泛化"/></a><div class="content"><a class="title" href="/2023/03/19/%E7%AB%99%E5%86%85%E5%95%86%E5%93%81%E6%B3%9B%E5%8C%96/" title="站内商品泛化">站内商品泛化</a><time datetime="2023-03-19T11:35:43.000Z" title="Created 2023-03-19 19:35:43">2023-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/19/Instagram-%E8%A7%86%E9%A2%91%E6%8C%82%E8%BD%A6%E5%95%86%E5%93%81/" title="Instagram 视频挂车商品"><img src="/img/Instagram-%E8%A7%86%E9%A2%91%E6%8C%82%E8%BD%A6%E5%95%86%E5%93%81/entire_workflow.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Instagram 视频挂车商品"/></a><div class="content"><a class="title" href="/2023/03/19/Instagram-%E8%A7%86%E9%A2%91%E6%8C%82%E8%BD%A6%E5%95%86%E5%93%81/" title="Instagram 视频挂车商品">Instagram 视频挂车商品</a><time datetime="2023-03-19T08:54:27.000Z" title="Created 2023-03-19 16:54:27">2023-03-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/09/Python-Project-Management-poetry-IV/" title="Python Project Management - poetry (IV)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (IV)"/></a><div class="content"><a class="title" href="/2023/03/09/Python-Project-Management-poetry-IV/" title="Python Project Management - poetry (IV)">Python Project Management - poetry (IV)</a><time datetime="2023-03-09T14:55:58.000Z" title="Created 2023-03-09 22:55:58">2023-03-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/05/Python-Project-Management-poetry-III/" title="Python Project Management - poetry (III)"><img src="/img/python_poetry.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python Project Management - poetry (III)"/></a><div class="content"><a class="title" href="/2023/03/05/Python-Project-Management-poetry-III/" title="Python Project Management - poetry (III)">Python Project Management - poetry (III)</a><time datetime="2023-03-05T14:20:44.000Z" title="Created 2023-03-05 22:20:44">2023-03-05</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('/img/MMU-%E8%A7%86%E9%A2%91%E5%85%B3%E9%94%AE%E5%B8%A7%E4%B8%8E%E5%95%86%E5%93%81%E8%AF%86%E5%88%AB/entire_workflow.png')"><div id="footer-wrap"><div class="copyright">&copy;2021 - 2023 By Jason Zeng, Anita Xiong</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">follow your heart</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="chat_btn" type="button" title="rightside.chat_btn"><i class="fas fa-sms"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">Local search</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="Search for Posts" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
