@@ -174,4 +174,70 @@ Poetry 默认使用 `dulwich` 来执行 git 相关任务而不依赖一个 git �
 
 注意：
 
-当 `installer.parallel` 被设定为 `false` 时，配置会被忽略
+当 `installer.parallel` 被设定为 `false` 时，配置会被忽略。
+
+### `installer.modern-installation`
+
+类型：`boolean`
+
+默认值：`true`
+
+用一个更现代和快速的方法安装依赖包。
+
+### `installer.no-binary`
+
+类型：`string|boolean`
+
+默认值：`false`
+
+设置这个配置之后，用户可以为所有或特定依赖包配置依赖包分发 (distribution) 格式。
+
+| 配置                     | 描述            |
+| ---------------------- | ------------- |
+| `:all:` or `true`      | 所有依赖包都禁止二进制格式 |
+| `:none:` or `false`    | 所有依赖包都允许二进制格式 |
+| `package[,package,..]` | 对某些依赖包禁止二进制格式 |
+
+### `installer.parallel`
+
+类型：`boolean`
+
+默认：`true`
+
+在使用新型安装器（`>=1.1.0`）时，可以使用并行执行的方式进行安装
+
+### `virtualenvs.create`
+
+类型：`boolean`
+
+默认值：`true`
+
+如果还没有一个虚拟环境，就创建一个。如果它被设定为 `false`，Poetry 将不会创建一个新的虚拟环境，如果它在 `{cache-dir}/virtualenvs` 或 `{project-dir}/.venv` 路径下检测到一个虚拟环境。它将往这些环境中安装依赖，否则它会将依赖安装进系统 python 环境。
+
+Notice：如果 Poetry 检测到当前正在一个激活的虚拟环境中运行，它将不再创建一个新的虚拟环境，不管 `virtualenvs.create` 被设置为什么值
+
+### `virtualenvs.in-project`
+
+类型：`boolean`
+
+默认值：`None`
+
+在项目的根目录创建虚拟环境
+
+如果没有显式得设定该值，Poetry 会在 `{cache-dir}/virtualenvs` 或 `{project-dir}/.venv` 路径下默认创建虚拟环境。
+
+如果设定为 `true`，虚拟环境会被创建，并且被期望放在一个名为 `.venv`  的目录名下，该目录在项目的根目录内挂载。
+
+如果设定为 `false`，Poetry 会忽略任何现存的 `.venv` 目录
+
+
+
+### 待续
+
+## 仓库
+
+## Refence
+
+[配置](https://python-poetry.org/docs/configuration/)
+
+[仓库](https://python-poetry.org/docs/repositories/)

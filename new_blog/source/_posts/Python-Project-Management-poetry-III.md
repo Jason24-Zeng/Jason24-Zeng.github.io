@@ -401,8 +401,6 @@ poetry add mkdorc --group docs
 
 - `--lock` 不实现安装，值更新锁文件
 
-
-
 ### remove
 
 `remove` 操作会从当前已安装依赖包中移除一个依赖包
@@ -424,8 +422,6 @@ poetry remove mkdocs --group docs
 - `--dev(-D)` 从开发依赖移除依赖包
 
 - `--dry-run` 输出操作，但不执行任何操作
-
-
 
 ### show
 
@@ -517,8 +513,6 @@ poetry publish
 
 - `--skip-existing` 忽略在仓库中已存在文件的错误
 
-
-
 ### config
 
 `config` 指令允许我们编辑 poetry 配置设置和仓库
@@ -607,8 +601,6 @@ poetry lock
 - `--check` 验证 `poetry.lock` 和 `pyproject.toml` 一致
 
 - `--no-update` 不更新锁定的版本，只更新 lock 文件
-
-
 
 ### version
 
@@ -886,7 +878,7 @@ poetry self show plugins
 
 `self remove` 指令移除一个安装的 addon 附加依赖包
 
-```shell 
+```shell
 poetry self remove poetry-plugin-export
 ```
 
@@ -907,8 +899,6 @@ poetry self install --sync
 - `--sync` 与锁定的依赖包和指定的组进行同步
 
 - `--dry-run`  输出执行操作但是不指定任何东西，它会隐式得打开 `-verbose`
-
-
 
 ## Reference
 
